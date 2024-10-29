@@ -29,14 +29,20 @@
  * @var $title_count                string
  * @var $excerpt_count              string
  * @var $cat_single_box             string
+ * @var $rating_showhide            string
  * @var $product                    string
  * @var $price_showhide             string
  * @var $title_showhide             string
  * @var $excerpt_display            string
  * @var $args                       string
  * @var $post_sorting               string
+ * @var $style                      string
+ * @var $more_button                string
+ * @var $see_button_link            string
  */
 	
+	
+	use RT\Foodymat\Modules\Pagination;
 	
 	if ( get_query_var('paged') ) {
 		$paged = get_query_var('paged');
@@ -61,6 +67,17 @@
 		'paged'             => $paged,
 	);
 	
+	// Include category filter if set
+	if ($cat_single_box !== '0') {
+		$args['tax_query'] = [
+			[
+				'taxonomy' => 'product_cat',
+				'field' => 'term_id',
+				'terms' => $cat_single_box,
+			],
+		];
+	}
+	
 	$query = new WP_Query($args);
 	
 	// Column classes
@@ -69,13 +86,14 @@
 	
 ?>
 
-<div class="default-woo-category-box woo-category-box-<?php echo esc_attr($category_style); ?>">
-    <div class="row <?php echo esc_attr($item_space); ?>">
+<div class="default-woo-layout woo-layout-<?php echo esc_attr($style); ?>">
+    <div class="row <?php //echo esc_attr($item_space); ?>">
 		<?php if ($query->have_posts()) : ?>
+			<?php $i = 1; ?>
 			<?php while ($query->have_posts()) : $query->the_post(); ?>
 				<?php
 				$id = get_the_ID();
-				$excerpt = wp_trim_words(get_the_excerpt(), $excerpt_count, '');
+				$excerpt = wp_trim_words(get_the_excerpt(), $excerpt_count);
 				$product_title = wp_trim_words(get_the_title(), $title_count, '');
 				global $product;
 				$currency = get_woocommerce_currency_symbol();
@@ -86,54 +104,46 @@
 				
 				$percentage_discount = get_post_meta($id, '_percentage_discount', true);
 				$min_subtotal = get_post_meta($id, '_min_subtotal', true);
-    
+                $odd_product = ($i % 2 === 0) ? '' : 'row-reverse reverse';
+				$average = $product->get_average_rating();
 				?>
                 <div class="<?php echo esc_attr($col_class) ?>">
-                    <div class="food-box-3">
+                    <div class="product-item product-item-<?php echo esc_attr($style); ?> <?php echo esc_attr($odd_product); ?>">
                         <div class="img-wrap">
                             <div class="item-img">
                                 <a href="<?php the_permalink(); ?>">
 									<?php
 										if (has_post_thumbnail()) {
-											the_post_thumbnail('foodymat-size4');
+											the_post_thumbnail('foodymat-size3');
 										} else {
 											echo 'image not found';
 										}
 									?>
                                 </a>
                             </div>
-                            <div class="discount-flag">
-                                <span><?php echo esc_html($percentage_discount); ?> OFF UPTO $100 <?php echo esc_html($min_subtotal); ?></span>
-                            </div>
                         </div>
-                        <h1><?php echo $min_subtotal ?> dd</h1>
                         <div class="item-content">
-							<?php if ($price_showhide == 'yes') : ?>
-                                <div class="item-price">
-									<?php
-										switch ($product->get_type()) {
-											case 'variable':
-												$min_price = $product->get_variation_price('min', true);
-												$max_price = $product->get_variation_price('max', true);
-												echo wp_kses($currency . number_format($min_price, 2) . ' - ' . $currency . number_format($max_price, 2), 'alltext_allow');
-												break;
-											case 'grouped':
-												$link = get_permalink($product->get_id());
-												echo '<a href="' . esc_url($link) . '">' . esc_html__('View Product', 'panpie-core') . '</a>';
-												break;
-											case 'external':
-												$link = !empty($ext_product_url) ? $ext_product_url : get_permalink($product->get_id());
-												$label = !empty($ext_button_text) ? $ext_button_text : esc_html__('Read More', 'panpie-core');
-												echo '<a href="' . esc_url($link) . '">' . wp_kses($label, 'alltext_allow') . '</a>';
-												break;
-											default:
-												echo wp_kses($product->get_price_html(), 'alltext_allow');
-												break;
-										}
-									?>
+                            <div class="product-categories">
+		                        <?php
+			                        $categories = wc_get_product_category_list($id, ' ');
+			                        echo wp_kses($categories, 'alltext_allow');
+		                        ?>
+                            </div>
+	                        <?php if ($rating_showhide == 'yes') : ?>
+                                <div class="product-rating">
+                                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="7" cy="6.99988" r="7" fill="#E9A800"/>
+                                        <path d="M7.00016 9.63488L9.07516 10.8899C9.45516 11.1199 9.92016 10.7799 9.82016 10.3499L9.27016 7.98988L11.1052 6.39988C11.4402 6.10988 11.2602 5.55988 10.8202 5.52488L8.40516 5.31988L7.46016 3.08988C7.29016 2.68488 6.71016 2.68488 6.54016 3.08988L5.59516 5.31488L3.18016 5.51988C2.74016 5.55488 2.56016 6.10488 2.89516 6.39488L4.73016 7.98488L4.18016 10.3449C4.08016 10.7749 4.54516 11.1149 4.92516 10.8849L7.00016 9.63488Z" fill="white"/>
+                                    </svg>
+    
+                                    <?php if (function_exists('woocommerce_template_loop_rating')) : ?>
+                                        <span>
+                                        <?php echo esc_html(number_format((float)$average, 1, '.', '')); ?>
+                                        </span>
+                                    <?php endif; ?>
                                 </div>
-							<?php endif; ?>
-							
+	                        <?php endif; ?>
+                         
 							<?php if ($title_showhide == 'yes') : ?>
                                 <h3 class="item-title">
                                     <a href="<?php the_permalink(); ?>">
@@ -143,40 +153,89 @@
 							<?php endif; ?>
 							
 							<?php if ($excerpt_display == 'yes') : ?>
-                                <p><?php echo wp_kses($excerpt, 'alltext_allow'); ?></p>
+                                <p class="excerpt"><?php echo wp_kses($excerpt, 'alltext_allow'); ?></p>
 							<?php endif; ?>
-
-                            <div class="btn-wrap">
-								<?php
-									switch ($product->get_type()) {
-										case 'variable':
-											$link = get_permalink($product->get_id());
-											$label = esc_html__('View options', 'panpie-core');
-											echo '<a href="' . esc_url($link) . '" class="cart-btn"><i class="fas fa-shopping-cart"></i>' . esc_html($label) . '</a>';
-											break;
-										case 'grouped':
-											$link = get_permalink($product->get_id());
-											$label = esc_html__('Select Product', 'panpie-core');
-											echo '<a href="' . esc_url($link) . '" class="cart-btn"><i class="fas fa-shopping-cart"></i>' . esc_html($label) . '</a>';
-											break;
-										case 'external':
-											$link = !empty($ext_product_url) ? $ext_product_url : get_permalink($product->get_id());
-											$label = !empty($ext_button_text) ? $ext_button_text : esc_html__('Read More', 'panpie-core');
-											echo '<a href="' . esc_url($link) . '" class="cart-btn"><i class="fas fa-shopping-cart"></i>' . esc_html($label) . '</a>';
-											break;
-										default:
-											$link = esc_url($product->add_to_cart_url());
-											$label = esc_html__('Add to cart', 'panpie-core');
-											echo '<a href="' . $link . '" class="cart-btn"><i class="fas fa-shopping-cart"></i>' . esc_html($label) . '</a>';
-											break;
-									}
-								?>
+	                        
+                            <div class="price-order-btn-wrap">
+                                <?php if ($price_showhide == 'yes') : ?>
+                                    <div class="item-price">
+                                        <?php
+                                            switch ($product->get_type()) {
+                                                case 'variable':
+                                                    $min_price = $product->get_variation_price('min', true);
+                                                    $max_price = $product->get_variation_price('max', true);
+                                                    echo wp_kses($currency . number_format($min_price, 2) . ' - ' . $currency . number_format($max_price, 2), 'alltext_allow');
+                                                    break;
+                                                case 'grouped':
+                                                    $link = get_permalink($product->get_id());
+                                                    echo '<a href="' . esc_url($link) . '">' . esc_html__('View Product', 'panpie-core') . '</a>';
+                                                    break;
+                                                case 'external':
+                                                    $link = !empty($ext_product_url) ? $ext_product_url : get_permalink($product->get_id());
+                                                    $label = !empty($ext_button_text) ? $ext_button_text : esc_html__('Read More', 'panpie-core');
+                                                    echo '<a href="' . esc_url($link) . '">' . wp_kses($label, 'alltext_allow') . '</a>';
+                                                    break;
+                                                default:
+    //												echo wp_kses($product->get_price_html(), 'alltext_allow');
+                                                    if ($product->is_on_sale() && !empty($sale)) {
+	                                                    echo ' <span class="sale-price">' . esc_html($currency . number_format($sale, 0)) . '</span>';
+	                                                    echo '<span class="original-price"><del>' . esc_html($currency . number_format($price, 0)) . '</del></span>';
+                                                    } else {
+                                                        // If not on sale, just show the regular price
+                                                        echo '<span class="regular-price">' . esc_html($currency . number_format($price, 2)) . '</span>';
+                                                    }
+                                                    break;
+                                            }
+                                        ?>
+                                    </div>
+                                <?php endif; ?>
+    
+                                <div class="btn-wrap">
+                                    <?php
+                                        switch ($product->get_type()) {
+                                            case 'variable':
+                                                $link = get_permalink($product->get_id());
+                                                $label = esc_html__('View options', 'panpie-core');
+                                                echo '<a href="' . esc_url($link) . '" class="cart-btn"><i class="icon-rt-cart"></i>' . esc_html($label) . '</a>';
+                                                break;
+                                            case 'grouped':
+                                                $link = get_permalink($product->get_id());
+                                                $label = esc_html__('Select Product', 'panpie-core');
+                                                echo '<a href="' . esc_url($link) . '" class="cart-btn"><i class="icon-rt-cart"></i>' . esc_html($label) . '</a>';
+                                                break;
+                                            case 'external':
+                                                $link = !empty($ext_product_url) ? $ext_product_url : get_permalink($product->get_id());
+                                                $label = !empty($ext_button_text) ? $ext_button_text : esc_html__('Read More', 'panpie-core');
+                                                echo '<a href="' . esc_url($link) . '" class="cart-btn"><i class="icon-rt-cart"></i>' . esc_html($label) . '</a>';
+                                                break;
+                                            default:
+                                                $link = esc_url($product->add_to_cart_url());
+                                                $label = esc_html__('Add to cart', 'panpie-core');
+                                                echo '<a href="' . $link . '" class="cart-btn"><i class="icon-rt-cart"></i>' . esc_html($label) . '</a>';
+                                                break;
+                                        }
+                                    ?>
+                                </div>
+                            </div>
+                            
+                            <div class="discount-flag">
+                                <span><?php echo esc_html($percentage_discount); ?> OFF UPTO <?php echo esc_html($min_subtotal); ?></span>
                             </div>
                         </div>
                     </div>
                 </div>
+                <?php $i++; ?>
 			<?php endwhile; ?>
+   
 		<?php endif; ?>
-        <h1>Woo Layout</h1>
+	   
     </div>
+	<?php if ( $more_button == 'show' ) { ?>
+		<?php if ( !empty( $see_button_text ) ) { ?>
+            <div class="gallery-button"><a class="btn-fill-dark" href="<?php echo esc_url( $see_button_link );?>"><?php echo esc_html( $see_button_text );?><i class="fas fa-arrow-right"></i></a></div>
+		<?php } ?>
+	<?php } else { ?>
+		<?php Pagination::pagination($query);?>
+	<?php } ?>
+	
 </div>

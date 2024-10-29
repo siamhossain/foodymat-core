@@ -40,7 +40,7 @@ class WooLayout extends ElementorBase {
 		// find the variations
 		$lists = wp_list_pluck(wc_get_attribute_taxonomies(), 'attribute_label', 'attribute_name');
 		
-		$list_dropdown = array( '0' => esc_html__( 'All Variation', 'panpie-core' ) );
+		$list_dropdown = array( '0' => esc_html__( 'All Variation', 'foodymat-core' ) );
 		
 		foreach ( $lists as $key=>$value ) {
 			$list_dropdown[$key] = $value;
@@ -49,7 +49,7 @@ class WooLayout extends ElementorBase {
 		// find the category of products
 		
 		$terms  = get_terms( array( 'taxonomy' => 'product_cat', 'fields' => 'id=>name' ) );
-		$category_dropdown = array( '0' => __( 'Please Selecet category', 'digeco-core' ) );
+		$category_dropdown = array( '0' => __( 'Please Selecet category', 'foodymat-core' ) );
 		
 		foreach ( $terms as $id => $name ) {
 			$category_dropdown[$id] = $name;
@@ -58,7 +58,7 @@ class WooLayout extends ElementorBase {
 		$this->start_controls_section(
 			'sec_general',
 			[
-				'label'   => esc_html__( 'General', 'panpie-core' ),
+				'label'   => esc_html__( 'General', 'foodymat-core' ),
 				'tab'   => Controls_Manager::TAB_CONTENT,
 			],
 		);
@@ -67,19 +67,19 @@ class WooLayout extends ElementorBase {
 			'style',
 			[
 				'type'    => Controls_Manager::SELECT2,
-				'label'   => esc_html__( 'Style', 'panpie-core' ),
+				'label'   => esc_html__( 'Style', 'foodymat-core' ),
 				'options' => array(
-					'style1' => esc_html__( 'Style 1', 'panpie-core' ),
-					'style2' => esc_html__( 'Style 2', 'panpie-core' ),
-					'style5' => esc_html__( 'Style 3', 'panpie-core' ),
-					'style6' => esc_html__( 'Style 4', 'panpie-core' ),
-					'style10' => esc_html__( 'Style 5', 'panpie-core' ),
-					'style3' => esc_html__( 'Food Menu Isotope', 'panpie-core' ),
-					'style8' => esc_html__( 'Food Menu Isotope 2', 'panpie-core' ),
-					'style9' => esc_html__( 'Food Menu Isotope 3', 'panpie-core' ),
-					'style11' => esc_html__( 'Food Menu Isotope 4', 'panpie-core' ),
-					'style4' => esc_html__( 'Food Menu Carousel', 'panpie-core' ),
-					'style7' => esc_html__( 'Food Menu Carousel 2', 'panpie-core' ),
+					'style1' => esc_html__( 'Style 1', 'foodymat-core' ),
+					'style2' => esc_html__( 'Style 2', 'foodymat-core' ),
+					'style5' => esc_html__( 'Style 3', 'foodymat-core' ),
+					'style6' => esc_html__( 'Style 4', 'foodymat-core' ),
+					'style10' => esc_html__( 'Style 5', 'foodymat-core' ),
+					'style3' => esc_html__( 'Food Menu Isotope', 'foodymat-core' ),
+					'style8' => esc_html__( 'Food Menu Isotope 2', 'foodymat-core' ),
+					'style9' => esc_html__( 'Food Menu Isotope 3', 'foodymat-core' ),
+					'style11' => esc_html__( 'Food Menu Isotope 4', 'foodymat-core' ),
+					'style4' => esc_html__( 'Food Menu Carousel', 'foodymat-core' ),
+					'style7' => esc_html__( 'Food Menu Carousel 2', 'foodymat-core' ),
 				),
 				'default' => 'style1',
 			],
@@ -90,9 +90,9 @@ class WooLayout extends ElementorBase {
 			[
 				'type'    => Controls_Manager::SWITCHER,
 				'id'      => 'title_showhide',
-				'label'   => esc_html__( 'Title', 'panpie-core' ),
-				'label_on'    => esc_html__( 'Show', 'panpie-core' ),
-				'label_off'   => esc_html__( 'Hide', 'panpie-core' ),
+				'label'   => esc_html__( 'Title', 'foodymat-core' ),
+				'label_on'    => esc_html__( 'Show', 'foodymat-core' ),
+				'label_off'   => esc_html__( 'Hide', 'foodymat-core' ),
 				'default'     => 'yes',
 			],
 		);
@@ -102,9 +102,9 @@ class WooLayout extends ElementorBase {
 			[
 				'type'    => Controls_Manager::NUMBER,
 				
-				'label'   => esc_html__( 'Title Word count', 'panpie-core' ),
+				'label'   => esc_html__( 'Title Word count', 'foodymat-core' ),
 				'default' => 5,
-				'description' => esc_html__( 'Maximum number of words', 'panpie-core' ),
+				'description' => esc_html__( 'Maximum number of words', 'foodymat-core' ),
 			],
 		);
 		
@@ -112,10 +112,9 @@ class WooLayout extends ElementorBase {
 			'variation_cat',
 			[
 				'type'    => Controls_Manager::SELECT2,
-				'label'   => esc_html__( 'Variations', 'panpie-core' ),
+				'label'   => esc_html__( 'Variations', 'foodymat-core' ),
 				'options' => $list_dropdown,
 				'default' => '0',
-				'condition'   => array( 'style' => array( 'style2',  'style6', 'style10', 'style3', 'style8', 'style9' ) ),
 			],
 		);
 		
@@ -124,17 +123,16 @@ class WooLayout extends ElementorBase {
 			[
 				'type'    => Controls_Manager::SELECT2,
 				
-				'label'   => esc_html__( 'Product Attribute Limit', 'panpie-core' ),
-				'description' => esc_html__( 'Note: This is not attribute item.', 'panpie-core' ),
+				'label'   => esc_html__( 'Product Attribute Limit', 'foodymat-core' ),
+				'description' => esc_html__( 'Note: This is not attribute item.', 'foodymat-core' ),
 				'options' => array(
-					1 => esc_html__( '1', 'panpie-core' ),
-					2 => esc_html__( '2', 'panpie-core' ),
-					3 => esc_html__( '3', 'panpie-core' ),
-					4 => esc_html__( '4', 'panpie-core' ),
-					5 => esc_html__( '5', 'panpie-core' ),
+					1 => esc_html__( '1', 'foodymat-core' ),
+					2 => esc_html__( '2', 'foodymat-core' ),
+					3 => esc_html__( '3', 'foodymat-core' ),
+					4 => esc_html__( '4', 'foodymat-core' ),
+					5 => esc_html__( '5', 'foodymat-core' ),
 				),
 				'default' => 1,
-				'condition'   => array( 'style' => array('style1', 'style4', 'style5', 'style7' ) ),
 			],
 		);
 		
@@ -142,11 +140,10 @@ class WooLayout extends ElementorBase {
 			'cat_single_box',
 			[
 				'type'    => Controls_Manager::SELECT2,
-				'label'   => esc_html__( 'Categories', 'panpie-core' ),
+				'label'   => esc_html__( 'CategoriesX', 'foodymat-core' ),
 				'options' => $category_dropdown,
 				'default'   => '0',
 				'multiple'  => false,
-				'condition'   => array( 'style' => array( 'style1', 'style2', 'style4', 'style6', 'style7', 'style10' ) ),
 			],
 		);
 		
@@ -155,18 +152,20 @@ class WooLayout extends ElementorBase {
 			[
 				'type'    => Controls_Manager::REPEATER,
 				
-				'label'   => esc_html__( 'Add as many Categories as you want', 'panpie-core' ),
+				'label'   => esc_html__( 'Add as many Categories as you want', 'foodymat-core' ),
 				'fields'  => array(
 					array(
 						'type'    => Controls_Manager::SELECT2,
 						'name'    => 'cat_multi_box',
-						'label'   => esc_html__( 'Categories', 'panpie-core' ),
+						'label'   => esc_html__( 'Categories', 'foodymat-core' ),
 						'options' => $category_dropdown,
 						'multiple'=> false,
 						'default' => '1',
 					),
 				),
-				'condition'   => array( 'style' => array( 'style5', 'style3', 'style8', 'style9', 'style11' ) ),
+				'condition' => [
+					'style' => '!style1',
+				],
 			],
 		);
 		
@@ -174,16 +173,18 @@ class WooLayout extends ElementorBase {
 			'posts_not_in',
 			[
 				'type'    => Controls_Manager::REPEATER,
-				'label'   => esc_html__( 'Enter Post ID that will not display', 'panpie-core' ),
+				'label'   => esc_html__( 'Enter Post ID that will not display', 'foodymat-core' ),
 				'fields'  => array(
 					array(
 						'type'    => Controls_Manager::NUMBER,
 						'name'    => 'post_not_in',
-						'label'   => esc_html__( 'Post ID', 'panpie-core' ),
+						'label'   => esc_html__( 'Post ID', 'foodymat-core' ),
 						'default' => '0',
 					),
 				),
-				'condition'   => array( 'style' => array( 'style5', 'style3', 'style8', 'style9', 'style11' ) ),
+				'condition' => [
+					'style' => '!style1',
+				],
 			],
 		);
 		
@@ -191,9 +192,9 @@ class WooLayout extends ElementorBase {
 			'price_showhide',
 			[
 				'type'    => Controls_Manager::SWITCHER,
-				'label'   => esc_html__( 'Price Show/Hide', 'panpie-core' ),
-				'label_on'    => esc_html__( 'Show', 'panpie-core' ),
-				'label_off'   => esc_html__( 'Hide', 'panpie-core' ),
+				'label'   => esc_html__( 'Price Show/Hide', 'foodymat-core' ),
+				'label_on'    => esc_html__( 'Show', 'foodymat-core' ),
+				'label_off'   => esc_html__( 'Hide', 'foodymat-core' ),
 				'default'     => 'yes',
 			],
 		);
@@ -202,11 +203,10 @@ class WooLayout extends ElementorBase {
 			'rating_showhide',
 			[
 				'type'    => Controls_Manager::SWITCHER,
-				'label'   => esc_html__( 'Rating Show/Hide', 'panpie-core' ),
-				'label_on'    => esc_html__( 'Show', 'panpie-core' ),
-				'label_off'   => esc_html__( 'Hide', 'panpie-core' ),
+				'label'   => esc_html__( 'Rating Show/Hide', 'foodymat-core' ),
+				'label_on'    => esc_html__( 'Show', 'foodymat-core' ),
+				'label_off'   => esc_html__( 'Hide', 'foodymat-core' ),
 				'default'     => 'yes',
-				'condition'   => array( 'style' => array( 'style7', 'style10', 'style11' ) ),
 			],
 		);
 					
@@ -214,11 +214,10 @@ class WooLayout extends ElementorBase {
 			'excerpt_display',
 			[
 				'type'    => Controls_Manager::SWITCHER,
-				'label'   => esc_html__( 'Short Detail Show/Hide', 'panpie-core' ),
-				'label_on'    => esc_html__( 'Show', 'panpie-core' ),
-				'label_off'   => esc_html__( 'Hide', 'panpie-core' ),
+				'label'   => esc_html__( 'Short Detail Show/Hide', 'foodymat-core' ),
+				'label_on'    => esc_html__( 'Show', 'foodymat-core' ),
+				'label_off'   => esc_html__( 'Hide', 'foodymat-core' ),
 				'default'     => 'yes',
-				'condition'   => array( 'style' => array( 'style2', 'style3', 'style5', 'style6', 'style8', 'style9', 'style10', 'style11' ) ),
 			],
 		);
 						
@@ -226,10 +225,9 @@ class WooLayout extends ElementorBase {
 			'excerpt_count',
 			[
 				'type'    => Controls_Manager::NUMBER,
-				'label'   => esc_html__( 'Word count', 'panpie-core' ),
+				'label'   => esc_html__( 'Word count', 'foodymat-core' ),
 				'default' => 13,
-				'description' => esc_html__( 'Maximum number of words', 'panpie-core' ),
-				'condition'   => array( 'excerpt_display' => array( 'yes' ), 'style' => array( 'style2', 'style3', 'style5', 'style6', 'style8', 'style9', 'style10', 'style11' ) ),
+				'description' => esc_html__( 'Maximum number of words', 'foodymat-core' ),
 			],
 		);
 		
@@ -237,13 +235,12 @@ class WooLayout extends ElementorBase {
 			'all_button',
 			[
 				'type'    => Controls_Manager::SELECT2,
-				'label'   => esc_html__( 'Show All Button', 'panpie-core' ),
+				'label'   => esc_html__( 'Show All Button', 'foodymat-core' ),
 				'options' => array(
-					'show'        => esc_html__( 'Show', 'panpie-core' ),
-					'hide'        => esc_html__( 'Hide', 'panpie-core' ),
+					'show'        => esc_html__( 'Show', 'foodymat-core' ),
+					'hide'        => esc_html__( 'Hide', 'foodymat-core' ),
 				),
 				'default' => 'show',
-				'condition'   => array( 'style' => array( 'style3', 'style5', 'style8', 'style9', 'style11' ) ),
 			],
 		);
 		/*Isotope End*/
@@ -254,10 +251,10 @@ class WooLayout extends ElementorBase {
 			[
 				'type'    => Controls_Manager::SELECT2,
 				
-				'label'   => esc_html__( 'Post Ordering', 'panpie-core' ),
+				'label'   => esc_html__( 'Post Ordering', 'foodymat-core' ),
 				'options' => array(
-					'DESC'	=> esc_html__( 'Desecending', 'panpie-core' ),
-					'ASC'	=> esc_html__( 'Ascending', 'panpie-core' ),
+					'DESC'	=> esc_html__( 'Desecending', 'foodymat-core' ),
+					'ASC'	=> esc_html__( 'Ascending', 'foodymat-core' ),
 				),
 				'default' => 'DESC',
 			],
@@ -267,12 +264,12 @@ class WooLayout extends ElementorBase {
 			'orderby',
 			[
 				'type'    => Controls_Manager::SELECT2,
-				'label'   => esc_html__( 'Post Sorting', 'panpie-core' ),
+				'label'   => esc_html__( 'Post Sorting', 'foodymat-core' ),
 				'options' => array(
-					'recent' 		=> esc_html__( 'Recent Post', 'panpie-core' ),
-					'rand' 			=> esc_html__( 'Random Post', 'panpie-core' ),
-					'menu_order' 	=> esc_html__( 'Custom Order', 'panpie-core' ),
-					'title' 		=> esc_html__( 'By Name', 'panpie-core' ),
+					'recent' 		=> esc_html__( 'Recent Post', 'foodymat-core' ),
+					'rand' 			=> esc_html__( 'Random Post', 'foodymat-core' ),
+					'menu_order' 	=> esc_html__( 'Custom Order', 'foodymat-core' ),
+					'title' 		=> esc_html__( 'By Name', 'foodymat-core' ),
 				),
 				'default' => 'recent',
 			],
@@ -282,9 +279,9 @@ class WooLayout extends ElementorBase {
 			'itemnumber',
 			[
 				'type'    => Controls_Manager::NUMBER,
-				'label'   => esc_html__( 'Item Number', 'panpie-core' ),
+				'label'   => esc_html__( 'Item Number', 'foodymat-core' ),
 				'default' => -1,
-				'description' => esc_html__( 'Use -1 for showing all items( Showing items per category )', 'panpie-core' ),
+				'description' => esc_html__( 'Use -1 for showing all items( Showing items per category )', 'foodymat-core' ),
 			],
 		);
 		
@@ -292,13 +289,12 @@ class WooLayout extends ElementorBase {
 			'more_button',
 			[
 				'type'    => Controls_Manager::SELECT2,
-				'label'   => esc_html__( 'More Button', 'panpie-core' ),
+				'label'   => esc_html__( 'More Button', 'foodymat-core' ),
 				'options' => array(
-					'show'        => esc_html__( 'Show', 'panpie-core' ),
-					'hide'        => esc_html__( 'Hide', 'panpie-core' ),
+					'show'        => esc_html__( 'Show', 'foodymat-core' ),
+					'hide'        => esc_html__( 'Hide', 'foodymat-core' ),
 				),
 				'default' => 'hide',
-				'condition'   => array( 'style' => array( 'style1','style2','style3', 'style6', 'style8', 'style9', 'style10', 'style11' ) ),
 			],
 		);
 		
@@ -306,9 +302,8 @@ class WooLayout extends ElementorBase {
 			'see_button_text',
 			[
 				'type'    => Controls_Manager::TEXT,
-				'label'   => esc_html__( 'Button Text', 'panpie-core' ),
-				'condition'   => array( 'more_button' => array( 'show' ), 'style' => array( 'style1','style2','style3', 'style6', 'style8', 'style9', 'style10', 'style11' ) ),
-				'default' => esc_html__( 'Show More', 'panpie-core' ),
+				'label'   => esc_html__( 'Button Text', 'foodymat-core' ),
+				'default' => esc_html__( 'Show More', 'foodymat-core' ),
 			],
 		);
 		
@@ -316,8 +311,7 @@ class WooLayout extends ElementorBase {
 			'see_button_link',
 			[
 				'type'    => Controls_Manager::TEXT,
-				'label'   => esc_html__( 'Button Link', 'panpie-core' ),
-				'condition'   => array( 'more_button' => array( 'show' ), 'style' => array( 'style1','style2','style3', 'style6', 'style8', 'style9', 'style10', 'style11' )),
+				'label'   => esc_html__( 'Button Link', 'foodymat-core' ),
 			],
 		);
 		
@@ -326,7 +320,7 @@ class WooLayout extends ElementorBase {
 		$this->start_controls_section(
 			'sec_colors',
 			[
-				'label'   => esc_html__( 'Colors', 'panpie-core' ),
+				'label'   => esc_html__( 'Colors', 'foodymat-core' ),
 				'tab'     => Controls_Manager::TAB_CONTENT,
 			],
 		);
@@ -335,7 +329,7 @@ class WooLayout extends ElementorBase {
 			'title_color',
 			[
 				'type'    => Controls_Manager::COLOR,
-				'label'   => esc_html__( 'Title Color', 'panpie-core' ),
+				'label'   => esc_html__( 'Title Color', 'foodymat-core' ),
 				'default' => '',
 				'selectors' => [
 					'{{WRAPPER}} .food-box .item-content .item-title a' => 'color: {{VALUE}}',
@@ -350,7 +344,7 @@ class WooLayout extends ElementorBase {
 			'title_size',
 			[
 				'type'    => Controls_Manager::NUMBER,
-				'label'   => esc_html__( 'Title Font Size', 'panpie-core' ),
+				'label'   => esc_html__( 'Title Font Size', 'foodymat-core' ),
 				'default' => '',
 				'selectors' => [
 					'{{WRAPPER}} .food-box .item-content .item-title' => 'font-size: {{VALUE}}px',
