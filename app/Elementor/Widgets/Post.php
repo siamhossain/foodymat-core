@@ -22,10 +22,11 @@ class Post extends ElementorBase {
 		$this->rt_base      = 'rt-post';
 		$this->rt_translate = [
 			'cols' => [
-				'3'  => __( '4 Columns', 'foodymat-core' ),
-				'4'  => __( '3 Columns', 'foodymat-core' ),
-				'6'  => __( '2 Columns', 'foodymat-core' ),
-				'12' => __( '1 Columns', 'foodymat-core' ),
+				'12' => __( '1 Col', 'foodymat-core' ),
+				'6'  => __( '2 Col', 'foodymat-core' ),
+				'4'  => __( '3 Col', 'foodymat-core' ),
+				'3'  => __( '4 Col', 'foodymat-core' ),
+				'2'  => __( '6 Col', 'foodymat-core' ),
 			],
 		];
 		parent::__construct( $data, $args );
@@ -51,9 +52,8 @@ class Post extends ElementorBase {
 					'default' => __( 'Post Grid 01', 'foodymat-core' ),
 					'grid-2' => __( 'Post Grid 02', 'foodymat-core' ),
 					'grid-3' => __( 'Post Grid 03', 'foodymat-core' ),
-					'grid-4' => __( 'Post Grid 04', 'foodymat-core' ),
-					'grid-5' => __( 'Post Grid 05', 'foodymat-core' ),
 					'list-2' => __( 'Post List 01', 'foodymat-core' ),
+					'slider-1' => __( 'Post Slider 01', 'foodymat-core' ),
 				],
 
 			]
@@ -67,6 +67,9 @@ class Post extends ElementorBase {
 				'label_off'    => __( 'Default', 'foodymat-core' ),
 				'label_on'     => __( 'Custom', 'foodymat-core' ),
 				'return_value' => 'yes',
+                'condition'    => [
+                        'layout!' => 'slider-1',
+                ]
 			]
 		);
 
@@ -278,6 +281,291 @@ class Post extends ElementorBase {
 		);
 
 		$this->end_controls_section();
+		
+		
+		// Responsive Settings
+		$this->start_controls_section(
+			'sec_grid_responsive',
+			[
+				'label' => esc_html__( 'Number of Responsive Columns', 'foodymat-core' ),
+				'tab'   => Controls_Manager::TAB_CONTENT,
+				'condition'  => [
+					'layout' => ['layout-1','layout-2','layout-3','layout-4','layout-9'],
+				],
+			]
+		);
+		
+		$this->add_control(
+			'col_xl',
+			[
+				'type' => Controls_Manager::SELECT,
+				'label'   => esc_html__( 'Desktops: > 1199px', 'foodymat-core' ),
+				'options' => $this->rt_translate['cols'],
+				'default' => '4',
+			]
+		);
+		$this->add_control(
+			'col_lg',
+			[
+				'type' => Controls_Manager::SELECT,
+				'label'   => esc_html__( 'Desktops: > 991px', 'foodymat-core' ),
+				'options' => $this->rt_translate['cols'],
+				'default' => '4',
+			]
+		);
+		$this->add_control(
+			'col_md',
+			[
+				'type' => Controls_Manager::SELECT,
+				'label'   => esc_html__( 'Tablets: > 767px', 'foodymat-core' ),
+				'options' => $this->rt_translate['cols'],
+				'default' => '6',
+			]
+		);
+		$this->add_control(
+			'col_sm',
+			[
+				'type' => Controls_Manager::SELECT,
+				'label'   => esc_html__( 'Phones: < 768px', 'foodymat-core' ),
+				'options' => $this->rt_translate['cols'],
+				'default' => '6',
+			]
+		);
+		$this->add_control(
+			'col_xs',
+			[
+				'type' => Controls_Manager::SELECT,
+				'label'   => esc_html__( 'Small Phones: < 480px', 'foodymat-core' ),
+				'options' => $this->rt_translate['cols'],
+				'default' => '12',
+			]
+		);
+		
+		$this->end_controls_section();
+		
+		// Slider responsive
+		$this->start_controls_section(
+			'section_slider_grid',
+			[
+				'label' => __( 'Slider Grid', 'foodymat-core' ),
+				'condition' => [
+					'layout' => ['slider-1'],
+				],
+			]
+		);
+		
+		$this->add_control(
+			'desktop',
+			[
+				'type'    => Controls_Manager::SELECT2,
+				'label'   => esc_html__( 'Desktops: > 1600px', 'foodymat-core' ),
+				'default' => '4',
+				'options' => array(
+					'1' => esc_html__( '1', 'foodymat-core' ),
+					'2' => esc_html__( '2', 'foodymat-core' ),
+					'3' => esc_html__( '3',  'foodymat-core' ),
+					'4' => esc_html__( '4',  'foodymat-core' ),
+					'5' => esc_html__( '5',  'foodymat-core' ),
+					'6' => esc_html__( '6',  'foodymat-core' ),
+				),
+			]
+		);
+		$this->add_control(
+			'md_desktop',
+			[
+				'type'    => Controls_Manager::SELECT2,
+				'label'   => esc_html__( 'Desktops: > 1200px', 'foodymat-core' ),
+				'default' => '4',
+				'options' => array(
+					'1' => esc_html__( '1', 'foodymat-core' ),
+					'2' => esc_html__( '2', 'foodymat-core' ),
+					'3' => esc_html__( '3',  'foodymat-core' ),
+					'4' => esc_html__( '4',  'foodymat-core' ),
+					'5' => esc_html__( '5',  'foodymat-core' ),
+					'6' => esc_html__( '6',  'foodymat-core' ),
+				),
+			]
+		);
+		$this->add_control(
+			'sm_desktop',
+			[
+				'type'    => Controls_Manager::SELECT2,
+				'label'   => esc_html__( 'Desktops: > 992px', 'foodymat-core' ),
+				'default' => '3',
+				'options' => array(
+					'1' => esc_html__( '1', 'foodymat-core' ),
+					'2' => esc_html__( '2', 'foodymat-core' ),
+					'3' => esc_html__( '3',  'foodymat-core' ),
+					'4' => esc_html__( '4',  'foodymat-core' ),
+					'5' => esc_html__( '5',  'foodymat-core' ),
+				),
+			]
+		);
+		$this->add_control(
+			'tablet',
+			[
+				'type'    => Controls_Manager::SELECT2,
+				'label'   => esc_html__( 'Tablets: > 768px', 'foodymat-core' ),
+				'default' => '2',
+				'options' => array(
+					'1' => esc_html__( '1', 'foodymat-core' ),
+					'2' => esc_html__( '2', 'foodymat-core' ),
+					'3' => esc_html__( '3',  'foodymat-core' ),
+					'4' => esc_html__( '4',  'foodymat-core' ),
+					'5' => esc_html__( '5',  'foodymat-core' ),
+				),
+			]
+		);
+		$this->add_control(
+			'mobile',
+			[
+				'type'    => Controls_Manager::SELECT2,
+				'label'   => esc_html__( 'Phones: > 576px', 'foodymat-core' ),
+				'default' => '2',
+				'options' => array(
+					'1' => esc_html__( '1', 'foodymat-core' ),
+					'2' => esc_html__( '2', 'foodymat-core' ),
+					'3' => esc_html__( '3',  'foodymat-core' ),
+					'4' => esc_html__( '4',  'foodymat-core' ),
+					'5' => esc_html__( '5',  'foodymat-core' ),
+				),
+			]
+		);
+		$this->add_control(
+			'sm_mobile',
+			[
+				'type'    => Controls_Manager::SELECT2,
+				'label'   => esc_html__( 'Phones: > 425px', 'foodymat-core' ),
+				'default' => '2',
+				'options' => array(
+					'1' => esc_html__( '1', 'foodymat-core' ),
+					'2' => esc_html__( '2', 'foodymat-core' ),
+					'3' => esc_html__( '3',  'foodymat-core' ),
+					'4' => esc_html__( '4',  'foodymat-core' ),
+					'5' => esc_html__( '5',  'foodymat-core' ),
+				),
+			]
+		);
+		
+		$this->end_controls_section();
+		
+		// Slider option
+		$this->start_controls_section(
+			'section_slider_option',
+			[
+				'label' => __( 'Slider Option', 'foodymat-core' ),
+				'condition' => [
+					'layout' => ['slider-1'],
+				],
+			]
+		);
+		$this->add_control(
+			'slider_autoplay',
+			[
+				'type'        => Controls_Manager::SWITCHER,
+				'label'       => esc_html__( 'Autoplay', 'foodymat-core' ),
+				'label_on'    => esc_html__( 'On', 'foodymat-core' ),
+				'label_off'   => esc_html__( 'Off', 'foodymat-core' ),
+				'default'     => 'yes',
+				'description' => esc_html__( 'Enable or disable autoplay. Default: On', 'foodymat-core' ),
+			]
+		);
+		$this->add_control(
+			'display_arrow',
+			[
+				'type'        => Controls_Manager::SWITCHER,
+				'label'       => esc_html__( 'Navigation Arrow', 'foodymat-core' ),
+				'label_on'    => esc_html__( 'On', 'foodymat-core' ),
+				'label_off'   => esc_html__( 'Off', 'foodymat-core' ),
+				'default'     => 'yes',
+				'description' => esc_html__( 'Navigation Arrow. Default: On', 'foodymat-core' ),
+			]
+		);
+		$this->add_control(
+			'display_pagination',
+			[
+				'type'        => Controls_Manager::SWITCHER,
+				'label'       => esc_html__( 'Pagination', 'foodymat-core' ),
+				'label_on'    => esc_html__( 'On', 'foodymat-core' ),
+				'label_off'   => esc_html__( 'Off', 'foodymat-core' ),
+				'default'     => 'no',
+				'description' => esc_html__( 'Navigation Arrow. Default: On', 'foodymat-core' ),
+			]
+		);
+		$this->add_control(
+			'slides_per_group',
+			[
+				'type'    => Controls_Manager::SLIDER,
+				'mode' 			=> 'responsive',
+				'label'   => esc_html__( 'slides Per Group', 'foodymat-core' ),
+				'default' => array(
+					'size' => 1,
+				),
+				'description' => esc_html__( 'slides Per Group. Default: 1', 'foodymat-core' ),
+			]
+		);
+		$this->add_control(
+			'centered_slides',
+			[
+				'type'        => Controls_Manager::SWITCHER,
+				'label'       => esc_html__( 'Centered Slides', 'foodymat-core' ),
+				'label_on'    => esc_html__( 'On', 'foodymat-core' ),
+				'label_off'   => esc_html__( 'Off', 'foodymat-core' ),
+				'default'     => 'no',
+				'description' => esc_html__( 'Centered Slides. Default: On', 'foodymat-core' ),
+			]
+		);
+		$this->add_control(
+			'slides_space',
+			[
+				'type'    => Controls_Manager::SLIDER,
+				'mode' 			=> 'responsive',
+				'label'   => esc_html__( 'Slides Space', 'foodymat-core' ),
+				'size_units' => array( 'px', '%' ),
+				'default' => array(
+					'unit' => 'px',
+					'size' => 24,
+				),
+				'description' => esc_html__( 'Slides Space. Default: 24', 'foodymat-core' ),
+			]
+		);
+		$this->add_control(
+			'slider_autoplay_delay',
+			[
+				'type'    => Controls_Manager::NUMBER,
+				'label'   => esc_html__( 'Autoplay Slide Delay', 'foodymat-core' ),
+				'default' => 5000,
+				'description' => esc_html__( 'Set any value for example 5 seconds to play it in every 5 seconds. Default: 5 Seconds', 'foodymat-core' ),
+				'condition'   => [
+					'slider_autoplay' => 'yes',
+				],
+			]
+		);
+		$this->add_control(
+			'slider_autoplay_speed',
+			[
+				'type'    => Controls_Manager::NUMBER,
+				'label'   => esc_html__( 'Autoplay Slide Speed', 'foodymat-core' ),
+				'default' => 1000,
+				'description' => esc_html__( 'Set any value for example .8 seconds to play it in every 2 seconds. Default: .8 Seconds', 'foodymat-core' ),
+				'condition'   => [
+					'slider_autoplay' => 'yes',
+				],
+			]
+		);
+		$this->add_control(
+			'slider_loop',
+			[
+				'type'        => Controls_Manager::SWITCHER,
+				'label'       => esc_html__( 'Loop', 'foodymat-core' ),
+				'label_on'    => esc_html__( 'On', 'foodymat-core' ),
+				'label_off'   => esc_html__( 'Off', 'foodymat-core' ),
+				'default'     => 'yes',
+				'description' => esc_html__( 'Loop to first item. Default: On', 'foodymat-core' ),
+			]
+		);
+		$this->end_controls_section();
+  
 
 
 		// Thumbnail style
@@ -1309,6 +1597,336 @@ class Post extends ElementorBase {
 		$this->end_controls_tabs();
 
 		$this->end_controls_section();
+		
+		// Slider setting
+		$this->start_controls_section(
+			'slider_style',
+			[
+				'label' => esc_html__( 'Slider Navigation', 'foodymat-core' ),
+				'tab'   => Controls_Manager::TAB_STYLE,
+				'condition' => [
+					'layout' => ['slider-1'],
+				],
+			]
+		);
+		
+		$this->add_control(
+			'arrow_hover_visibility',
+			[
+				'label'   => esc_html__( 'Arrow Visibility', 'foodymat-core' ),
+				'type'    => Controls_Manager::SELECT,
+				'default' => 'default',
+				'options' => [
+					'default' => __( 'Default', 'foodymat-core' ),
+					'hover-visibility' => __( 'Hover', 'foodymat-core' ),
+				],
+				'condition'   => [
+					'display_arrow' => 'yes',
+				],
+			]
+		);
+		
+		$this->add_responsive_control(
+			'arrow_radius',
+			[
+				'label'      => __( 'Radius', 'foodymat-core' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'selectors'  => [
+					'{{WRAPPER}} .swiper-navigation .swiper-button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}',
+				],
+				'condition'   => [
+					'display_arrow' => 'yes',
+				],
+			]
+		);
+		
+		$this->add_responsive_control(
+			'navigation_width',
+			[
+				'type'    => Controls_Manager::SLIDER,
+				'mode'          => 'responsive',
+				'label'   => esc_html__( 'Navigation Width', 'foodymat-core' ),
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .swiper-navigation .swiper-button' => 'width: {{SIZE}}{{UNIT}};',
+				],
+				'condition'   => [
+					'display_arrow' => 'yes',
+				],
+			]
+		);
+		
+		$this->add_responsive_control(
+			'navigation_height',
+			[
+				'type'    => Controls_Manager::SLIDER,
+				'mode'          => 'responsive',
+				'label'   => esc_html__( 'Navigation Height', 'foodymat-core' ),
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .swiper-navigation .swiper-button' => 'height: {{SIZE}}{{UNIT}};',
+				],
+				'condition'   => [
+					'display_arrow' => 'yes',
+				],
+			]
+		);
+		
+		$this->add_responsive_control(
+			'nex_prev_arrow',
+			[
+				'type'    => Controls_Manager::SLIDER,
+				'mode'          => 'responsive',
+				'label'   => esc_html__( 'Arrow Top / Bottom', 'foodymat-core' ),
+				'size_units' => [ '%', 'px' ],
+				'range' => [
+					'%' => [
+						'min' => -100,
+						'max' => 100,
+					],
+					'px' => [
+						'min' => -500,
+						'max' => 500,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .swiper-navigation .swiper-button' => 'top: {{SIZE}}{{UNIT}};',
+				],
+				'condition'   => [
+					'display_arrow' => 'yes',
+				],
+			]
+		);
+		$this->add_responsive_control(
+			'prev_arrow',
+			[
+				'type'    => Controls_Manager::SLIDER,
+				'mode'          => 'responsive',
+				'label'   => esc_html__( 'Prev Arrow', 'foodymat-core' ),
+				'size_units' => [ '%', 'px' ],
+				'range' => [
+					'%' => [
+						'min' => -100,
+						'max' => 100,
+					],
+					'px' => [
+						'min' => -500,
+						'max' => 500,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .swiper-navigation .swiper-button-prev' => 'left: {{SIZE}}{{UNIT}};',
+				],
+				'condition'   => [
+					'display_arrow' => 'yes',
+				],
+			]
+		);
+		$this->add_responsive_control(
+			'next_arrow',
+			[
+				'type'    => Controls_Manager::SLIDER,
+				'id'      => 'next_arrow',
+				'mode'          => 'responsive',
+				'label'   => esc_html__( 'Next Arrow', 'foodymat-core' ),
+				'size_units' => [ '%', 'px' ],
+				'range' => [
+					'%' => [
+						'min' => -100,
+						'max' => 100,
+					],
+					'px' => [
+						'min' => -500,
+						'max' => 500,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .swiper-navigation .swiper-button-next' => 'right: {{SIZE}}{{UNIT}};',
+				],
+				'condition'   => [
+					'display_arrow' => 'yes',
+				],
+			]
+		);
+		
+		$this->start_controls_tabs(
+			'navigation_style_tabs',
+			[
+				'condition'   => [
+					'display_arrow' => 'yes',
+				],
+			]
+		
+		);
+		
+		$this->start_controls_tab(
+			'navigation_style_tab',
+			[
+				'label' => __( 'Normal', 'foodymat-core' ),
+			]
+		);
+		$this->add_control(
+			'arrow_color',
+			[
+				'type'      => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Arrow Color', 'foodymat-core' ),
+				'selectors' => [
+					'{{WRAPPER}} .swiper-navigation .swiper-button' => 'color: {{VALUE}}',
+				],
+				'condition'   => [
+					'display_arrow' => 'yes',
+				],
+			]
+		);
+		$this->add_control(
+			'arrow_bg_color',
+			[
+				'type'      => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Arrow BG Color', 'foodymat-core' ),
+				'selectors' => [
+					'{{WRAPPER}} .swiper-navigation .swiper-button' => 'background-color: {{VALUE}}',
+				],
+				'condition'   => [
+					'display_arrow' => 'yes',
+				],
+			]
+		);
+		
+		$this->add_group_control(
+			\Elementor\Group_Control_Border::get_type(),
+			[
+				'name' => 'button_border',
+				'selector' => '{{WRAPPER}} .swiper-navigation .swiper-button',
+			]
+		);
+		
+		$this->end_controls_tab();
+		
+		$this->start_controls_tab(
+			'navigation_style_hover_tab',
+			[
+				'label' => __( 'Hover', 'foodymat-core' ),
+			]
+		);
+		$this->add_control(
+			'arrow_hover_color',
+			[
+				'type'      => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'ArrowHover Color', 'foodymat-core' ),
+				'selectors' => [
+					'{{WRAPPER}} .swiper-navigation .swiper-button:hover' => 'color: {{VALUE}}',
+				],
+				'condition'   => [
+					'display_arrow' => 'yes',
+				],
+			]
+		);
+		
+		$this->add_control(
+			'arrow_bg_hover_color',
+			[
+				'type'      => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Arrow BG Hover Color', 'foodymat-core' ),
+				'selectors' => [
+					'{{WRAPPER}} .swiper-navigation .swiper-button:hover' => 'background-color: {{VALUE}}',
+				],
+				'condition'   => [
+					'display_arrow' => 'yes',
+				],
+			]
+		);
+		
+		$this->add_group_control(
+			\Elementor\Group_Control_Border::get_type(),
+			[
+				'name' => 'button_hover_border',
+				'selector' => '{{WRAPPER}} .swiper-navigation .swiper-button:hover',
+			]
+		);
+		
+		$this->end_controls_tab();
+		
+		$this->end_controls_tabs();
+		
+		$this->add_control(
+			'pagination_heading',
+			[
+				'label'     => __( 'Pagination Style', 'foodymat-core' ),
+				'type'      => \Elementor\Controls_Manager::HEADING,
+				'separator' => 'before',
+				'condition'   => [
+					'display_pagination' => 'yes',
+				],
+			]
+		);
+		
+		$this->add_responsive_control(
+			'pagination_up_down',
+			[
+				'type'    => Controls_Manager::SLIDER,
+				'mode'          => 'responsive',
+				'label'   => esc_html__( 'Pagination UP / Down', 'foodymat-core' ),
+				'size_units' => [ '%', 'px' ],
+				'range' => [
+					'%' => [
+						'min' => 0,
+						'max' => 100,
+					],
+					'px' => [
+						'min' => 0,
+						'max' => 200,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .swiper-pagination' => 'margin-top: {{SIZE}}{{UNIT}};',
+				],
+				'condition'   => [
+					'display_pagination' => 'yes',
+				],
+			]
+		);
+		
+		$this->add_control(
+			'pagination_color',
+			[
+				'label'     => __( 'Pagination Color', 'foodymat-core' ),
+				'type'      => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .swiper-pagination .swiper-pagination-bullet' => 'background-color: {{VALUE}}',
+				],
+				'condition'   => [
+					'display_pagination' => 'yes',
+				],
+			]
+		);
+		$this->add_control(
+			'pagination_active_color',
+			[
+				'label'     => __( 'Pagination Active Color', 'foodymat-core' ),
+				'type'      => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .swiper-pagination .swiper-pagination-bullet-active' => 'background-color: {{VALUE}}',
+				],
+				'condition'   => [
+					'display_pagination' => 'yes',
+				],
+			]
+		);
+		
+		$this->end_controls_section();
 
 		//Animation setting
 		$this->start_controls_section(
@@ -1406,19 +2024,49 @@ class Post extends ElementorBase {
 
 	protected function render() {
 		$data = $this->get_settings();
+		
+		if($data['slider_autoplay']=='yes'){
+			$data['slider_autoplay']=true;
+		}
+		else{
+			$data['slider_autoplay']=false;
+		}
+		
+		$swiper_data = array(
+			'slidesPerView' 	=>2,
+			'loop'				=>$data['slider_loop']=='yes' ? true:false,
+			'spaceBetween'		=>$data['slides_space']['size'],
+			'slidesPerGroup'	=>$data['slides_per_group']['size'],
+			'centeredSlides'	=>$data['centered_slides']=='yes' ? true:false ,
+			'slideToClickedSlide' =>true,
+			'autoplay'				=>array(
+				'delay'  => $data['slider_autoplay_delay'],
+			),
+			'speed'      =>$data['slider_autoplay_speed'],
+			'breakpoints' =>array(
+				'0'    =>array('slidesPerView' =>1),
+				'425'    =>array('slidesPerView' =>$data['sm_mobile']),
+				'576'    =>array('slidesPerView' =>$data['mobile']),
+				'768'    =>array('slidesPerView' =>$data['tablet']),
+				'992'    =>array('slidesPerView' =>$data['sm_desktop']),
+				'1200'    =>array('slidesPerView' =>$data['md_desktop']),
+				'1600'    =>array('slidesPerView' =>$data['desktop'])
+			),
+			'auto'   =>$data['slider_autoplay']
+		);
 
 		$template = 'view-1';
 		if ( 'grid-2' == $data['layout'] ) {
 			$template = 'view-2';
 		} elseif ( 'grid-3' == $data['layout'] ) {
 			$template = 'view-3';
-		} elseif ( 'grid-4' == $data['layout'] ) {
-			$template = 'view-4';
-		} elseif ( 'grid-5' == $data['layout'] ) {
-			$template = 'view-5';
 		} elseif ( 'list-2' == $data['layout'] ) {
-			$template = 'view-6';
+			$template = 'view-4';
+		} elseif ( 'slider-1' == $data['layout'] ) {
+			$data['swiper_data'] = json_encode( $swiper_data );
+			$template = 'view-slider-1';
 		}
+  
 
 		$args = [
 			'post_type'           => 'post',
@@ -1479,16 +2127,20 @@ class Post extends ElementorBase {
 		$col_class = "col-lg-{$gird_column_desktop} col-md-{$gird_column_tab} col-sm-{$gird_column_mobile}";
 		?>
         <div class="rt-el-post-wrapper blog-<?php echo esc_attr( $data['layout'] ) ?>-layout">
-			<?php if ( $query->have_posts() ) : ?>
-                <div class="row <?php echo esc_attr( $data['item_space'] );?>">
-					<?php $ade = $data['delay']; $adu = $data['duration'];
-                    while ( $query->have_posts() ) : $query->the_post();
-						echo '<article class="foodymat-post-card blog-'. esc_attr( $data['layout'] ). ' ' . esc_attr( $col_class ) . ' ' . esc_attr( $data['animation'] ) . ' ' . esc_attr( $data['animation_effect'] ) . '" data-wow-delay= ' . esc_attr( $ade ) . "ms" .' data-wow-duration=' . esc_attr( $adu ) . "ms" .'>';
-						Fns::get_template( "elementor/post/$template", $data );
-						echo '</article>';
-	                    $ade = $ade + 200; $adu = $adu + 0; endwhile; ?>
-                </div>
-			<?php endif; ?>
+            <?php if( $data['layout'] == 'slider-1' ) { ?>
+                <?php Fns::get_template( "elementor/post/$template", $data ); ?>
+            <?php } else { ?>
+                <?php if ( $query->have_posts() ) : ?>
+                    <div class="row <?php echo esc_attr( $data['item_space'] );?>">
+                        <?php $ade = $data['delay']; $adu = $data['duration'];
+                        while ( $query->have_posts() ) : $query->the_post();
+                            echo '<article class="foodymat-post-card blog-'. esc_attr( $data['layout'] ). ' ' . esc_attr( $col_class ) . ' ' . esc_attr( $data['animation'] ) . ' ' . esc_attr( $data['animation_effect'] ) . '" data-wow-delay= ' . esc_attr( $ade ) . "ms" .' data-wow-duration=' . esc_attr( $adu ) . "ms" .'>';
+                            Fns::get_template( "elementor/post/$template", $data );
+                            echo '</article>';
+                            $ade = $ade + 200; $adu = $adu + 0; endwhile; ?>
+                    </div>
+                <?php endif; ?>
+            <?php  } ?>
 			<?php wp_reset_postdata(); ?>
         </div>
 		<?php

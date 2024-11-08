@@ -53,7 +53,7 @@ if( !empty( $post_id ) ){
 
 $query = new WP_Query( $args );
 ?>
-<div class="rt-team-default rt-team-multi-layout-1 team-slider-<?php echo esc_attr( $layout );?>">
+<div class="rt-team-default rt-team-multi-layout-1 team-sliderhnj-<?php echo esc_attr( $layout );?>">
 	<div class="rt-swiper-slider <?php echo esc_attr( $arrow_hover_visibility ) ?>" data-xld ="<?php echo esc_attr( $swiper_data );?>">
         <div class="swiper-wrapper">
 		<?php $ade = $delay; $adu = $duration; if ( $query->have_posts() ) {

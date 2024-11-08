@@ -672,7 +672,7 @@ class Team extends ElementorBase {
 		$this->start_controls_section(
 			'slider_style',
 			[
-				'label' => esc_html__( 'Slider Style', 'foodymat-core' ),
+				'label' => esc_html__( 'Slider Navigation', 'foodymat-core' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'layout' => ['layout-5', 'layout-6', 'layout-7', 'layout-8','layout-10'],
