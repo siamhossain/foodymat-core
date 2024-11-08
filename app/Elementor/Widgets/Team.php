@@ -52,13 +52,9 @@ class Team extends ElementorBase {
 					'layout-1' => esc_html__( 'Team Grid 01', 'foodymat-core' ),
 					'layout-2' => esc_html__( 'Team Grid 02', 'foodymat-core' ),
 					'layout-3' => esc_html__( 'Team Grid 03', 'foodymat-core' ),
-					'layout-4' => esc_html__( 'Team Grid 04', 'foodymat-core' ),
-					'layout-9' => esc_html__( 'Team Grid 05', 'foodymat-core' ),
 					'layout-5' => esc_html__( 'Team Slider 01', 'foodymat-core' ),
 					'layout-6' => esc_html__( 'Team Slider 02', 'foodymat-core' ),
 					'layout-7' => esc_html__( 'Team Slider 03', 'foodymat-core' ),
-					'layout-8' => esc_html__( 'Team Slider 04', 'foodymat-core' ),
-					'layout-10' => esc_html__( 'Team Slider 05', 'foodymat-core' ),
 				],
 				'default'     => 'layout-1',
 			]
@@ -1414,14 +1410,6 @@ class Team extends ElementorBase {
 
 
 		switch ( $data['layout'] ) {
-			case 'layout-10':
-				$data['swiper_data'] = json_encode( $swiper_data );
-				$template = 'view-slider-5';
-				break;
-			case 'layout-8':
-				$data['swiper_data'] = json_encode( $swiper_data );
-				$template = 'view-slider-4';
-				break;
 			case 'layout-7':
 				$data['swiper_data'] = json_encode( $swiper_data );
 				$template = 'view-slider-3';
@@ -1433,12 +1421,6 @@ class Team extends ElementorBase {
 			case 'layout-5':
 				$data['swiper_data'] = json_encode( $swiper_data );
 				$template = 'view-slider-1';
-				break;
-			case 'layout-9':
-				$template = 'view-5';
-				break;
-			case 'layout-4':
-				$template = 'view-4';
 				break;
 			case 'layout-3':
 				$template = 'view-3';

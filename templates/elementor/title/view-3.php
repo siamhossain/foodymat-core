@@ -27,7 +27,7 @@
  * @var $delay                          string
  * @var $duration                       string
  * @var $list_layout                    string
- * @var $title_layout                    string
+ * @var $title_layout                   string
  *
  */
 use Elementor\Icons_Manager;
@@ -35,7 +35,7 @@ use Elementor\Icons_Manager;
 $animation_headline = ( $animation_headline_display == 'yes' ) ? 'rt-animated-headline' : '';
 
 ?>
-<div class="section-title-wrapper <?php echo esc_attr( $animation_headline );?> <?php echo esc_attr( $title_layout );?>">
+<div class="section-title-wrapper <?php echo esc_attr( $animation_headline );?> title-<?php echo esc_attr( $title_layout );?>">
 	<div class="title-inner-wrapper ah-headline">
         <?php if( $shadow_title_display == 'yes' ) { ?><div class="shadow-title-wrap"><span class="shadow-title"><?php echo esc_html( $shadow_title ); ?></span></div><?php } ?>
 		<!--Top Sub Title-->
@@ -57,7 +57,7 @@ $animation_headline = ( $animation_headline_display == 'yes' ) ? 'rt-animated-he
 
 		<!--Main Title-->
 		<?php if ( $title ): ?>
-        <div class="<?php echo esc_attr( $animation );?> <?php echo esc_attr( $animation_effect );?>" data-wow-delay="400ms" data-wow-duration="1200ms">
+        <div class="main-title-wrap <?php echo esc_attr( $animation );?> <?php echo esc_attr( $animation_effect );?>" data-wow-delay="400ms" data-wow-duration="1200ms">
             <<?php echo esc_attr( $main_title_tag ) ?> class="main-title <?php echo esc_attr( $title_gradient_animation );?> <?php if( $title_gradient_change_display ) { ?><?php echo esc_attr( $title_gradient_change_display );?><?php } ?> <?php if( $title_line_shape ) { ?><?php echo esc_attr( $title_line_shape );?><?php } ?> <?php echo esc_attr( $title_image_aline );?> <?php if( !empty($alignment) ) { ?><?php echo esc_attr( $alignment );?><?php } ?>"><?php foodymat_html( $title, 'allow_title' );?>
                 <?php if( !empty( $animation_headline ) ) { ?>
                     <div class="ah-words-wrapper">

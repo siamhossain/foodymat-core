@@ -10,12 +10,12 @@ namespace RT\FoodymatCore\Controllers;
 use Elementor\Plugin;
 use RT\FoodymatCore\Elementor\Controls\ImageSelectorControl;
 use RT\FoodymatCore\Elementor\Controls\Select2AjaxControl;
+use RT\FoodymatCore\Elementor\Widgets\CountDown;
 use RT\FoodymatCore\Elementor\Widgets\WooLayout;
 use RT\FoodymatCore\Helper\Fns;
 use RT\FoodymatCore\Traits\SingletonTraits;
 use RT\FoodymatCore\Elementor\Core\ElementorCore;
 use RT\FoodymatCore\Modules\IconList;
-
 use RT\FoodymatCore\Elementor\Widgets\Title;
 use RT\FoodymatCore\Elementor\Widgets\Button;
 use RT\FoodymatCore\Elementor\Widgets\HeroSlider;
@@ -153,6 +153,7 @@ class ElementorController {
 			CopyRight::class,
 			WooCategoryBox::class,
 			WooLayout::class,
+			CountDown::class,
 		];
 		foreach ( $widgets as $class ) {
 			Plugin::instance()->widgets_manager->register( new $class );

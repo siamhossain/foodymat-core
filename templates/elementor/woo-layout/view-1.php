@@ -80,9 +80,12 @@
 	
 	$query = new WP_Query($args);
 	
+	if ( $style === 'style1' ) {
+		$col_xl = '12';
+	}
+	
 	// Column classes
 	$col_class = "col-xl-{$col_xl} col-lg-{$col_lg} col-md-{$col_md} col-sm-{$col_sm} col-xs-{$col_xs}";
-	
 	
 ?>
 
@@ -190,28 +193,29 @@
                                     </div>
                                 <?php endif; ?>
     
-                                <div class="btn-wrap">
+                                <div class="btn-wrap rt-button">
                                     <?php
                                         switch ($product->get_type()) {
                                             case 'variable':
+                                                
                                                 $link = get_permalink($product->get_id());
                                                 $label = esc_html__('View options', 'panpie-core');
-                                                echo '<a href="' . esc_url($link) . '" class="cart-btn"><i class="icon-rt-cart"></i>' . esc_html($label) . '</a>';
+                                                echo '<a href="' . esc_url($link) . '" class="cart-btn btn button-6"><i class="icon-rt-cart"></i>' . esc_html($label) . '</a>';
                                                 break;
                                             case 'grouped':
                                                 $link = get_permalink($product->get_id());
                                                 $label = esc_html__('Select Product', 'panpie-core');
-                                                echo '<a href="' . esc_url($link) . '" class="cart-btn"><i class="icon-rt-cart"></i>' . esc_html($label) . '</a>';
+                                                echo '<a href="' . esc_url($link) . '" class="cart-btn btn button-6"><i class="icon-rt-cart"></i>' . esc_html($label) . '</a>';
                                                 break;
                                             case 'external':
                                                 $link = !empty($ext_product_url) ? $ext_product_url : get_permalink($product->get_id());
                                                 $label = !empty($ext_button_text) ? $ext_button_text : esc_html__('Read More', 'panpie-core');
-                                                echo '<a href="' . esc_url($link) . '" class="cart-btn"><i class="icon-rt-cart"></i>' . esc_html($label) . '</a>';
+                                                echo '<a href="' . esc_url($link) . '" class="cart-btn btn button-6"><i class="icon-rt-cart"></i>' . esc_html($label) . '</a>';
                                                 break;
                                             default:
                                                 $link = esc_url($product->add_to_cart_url());
-                                                $label = esc_html__('Add to cart', 'panpie-core');
-                                                echo '<a href="' . $link . '" class="cart-btn"><i class="icon-rt-cart"></i>' . esc_html($label) . '</a>';
+                                                $label = esc_html__('Order Now', 'panpie-core');
+                                                echo '<a href="' . $link . '" class="cart-btn btn button-6"><i class="icon-rt-cart"></i>' . esc_html($label) . '</a>';
                                                 break;
                                         }
                                     ?>
@@ -226,16 +230,13 @@
                 </div>
                 <?php $i++; ?>
 			<?php endwhile; ?>
-   
 		<?php endif; ?>
-	   
     </div>
 	<?php if ( $more_button == 'show' ) { ?>
 		<?php if ( !empty( $see_button_text ) ) { ?>
-            <div class="gallery-button"><a class="btn-fill-dark" href="<?php echo esc_url( $see_button_link );?>"><?php echo esc_html( $see_button_text );?><i class="fas fa-arrow-right"></i></a></div>
+            <div class="rt-button show-more-btn"><a class="btn button-6" href="<?php echo esc_url( $see_button_link );?>"><?php echo esc_html( $see_button_text );?></a></div>
 		<?php } ?>
 	<?php } else { ?>
 		<?php Pagination::pagination($query);?>
 	<?php } ?>
-	
 </div>

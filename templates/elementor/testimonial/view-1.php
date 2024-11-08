@@ -31,6 +31,8 @@ use Elementor\Icons_Manager;
                 <div class="swiper-slide <?php echo esc_attr( $animation );?> <?php echo esc_attr( $animation_effect );?>" data-wow-delay="<?php echo esc_attr( $ade );?>ms" data-wow-duration="<?php echo esc_attr( $adu );?>ms">
                     <div class="slider-item <?php if( !empty( $alignment ) ) { ?><?php echo esc_attr( $alignment ) ?><?php } ?>">
                         <div class="testimonial-content">
+	                        <?php if ( $quote_display ) { ?><div class="quote"><?php Icons_Manager::render_icon( $quote_icon ); ?></div><?php } ?>
+                            
                             <?php if ( $rating_display ) { ?>
                                 <ul class="item-rating">
 		                            <?php for ( $i=0; $i <=4 ; $i++ ) {
@@ -43,6 +45,7 @@ use Elementor\Icons_Manager;
 		                            } ?>
                                 </ul>
                             <?php } ?>
+                            
                             <div class="rt-content">
                                 <p><?php echo esc_html( $item['content'] ); ?></p>
                             </div>
@@ -53,7 +56,7 @@ use Elementor\Icons_Manager;
 			                        echo wp_get_attachment_image( $item['image']['id'], 'full' );
 			                        echo "</div>";
 		                        } ?>
-                                <div>
+                                <div class="author-text-info">
                                     <<?php echo esc_attr( $title_tag ) ?> class="rt-title"><?php echo esc_html( $item['name'] ); ?></<?php echo esc_attr( $title_tag ) ?>>
                                     <?php if ( $item['designation'] && $designation_display ) { ?>
                                         <div class="rt-subtitle"><?php echo esc_html( $item['designation'] ); ?></div>
@@ -61,7 +64,7 @@ use Elementor\Icons_Manager;
                                 </div>
                             </div>
 
-	                        <?php if ( $quote_display ) { ?><span class="quote"><?php Icons_Manager::render_icon( $quote_icon ); ?></span><?php } ?>
+	                        
                         </div>
                     </div>
                 </div>

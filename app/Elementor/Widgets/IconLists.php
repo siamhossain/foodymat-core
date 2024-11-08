@@ -32,6 +32,19 @@ class IconLists extends ElementorBase {
 				'tab' => Controls_Manager::TAB_CONTENT,
 			]
 		);
+		
+		$this->add_control(
+			'icon_list_style',
+			[
+				'label'       => esc_html__( 'Category Style', 'foodymat-core' ),
+				'type'        => Controls_Manager::SELECT2,
+				'options'   => [
+					'style1' => __( 'Icon List Style 01', 'foodymat-core' ),
+					'style2' => __( 'Icon List Style 02', 'foodymat-core' ),
+				],
+				'default'     => 'style1',
+			]
+		);
 
 		$this->add_control(
 			'arrow_icon_display',
@@ -527,7 +540,15 @@ class IconLists extends ElementorBase {
 
 	protected function render() {
 		$data = $this->get_settings();
-		$template = 'view-1';
+		
+		switch ( $data['icon_list_style'] ) {
+			case 'style2':
+				$template = 'view-2';
+				break;
+			default:
+				$template = 'view-1';
+				break;
+		}
 		Fns::get_template( "elementor/icon-list/$template", $data );
 	}
 }

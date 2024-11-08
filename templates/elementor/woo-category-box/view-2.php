@@ -101,5 +101,6 @@ $col_class = "col-xl-{$col_xl} col-lg-{$col_lg} col-md-{$col_md} col-sm-{$col_sm
             <div class="swiper-pagination"></div>
 	    <?php } ?>
     </div>
+</div>
     
 

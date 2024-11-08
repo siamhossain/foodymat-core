@@ -140,7 +140,7 @@ class WooLayout extends ElementorBase {
 			'cat_single_box',
 			[
 				'type'    => Controls_Manager::SELECT2,
-				'label'   => esc_html__( 'CategoriesX', 'foodymat-core' ),
+				'label'   => esc_html__( 'Categories', 'foodymat-core' ),
 				'options' => $category_dropdown,
 				'default'   => '0',
 				'multiple'  => false,
@@ -315,6 +315,34 @@ class WooLayout extends ElementorBase {
 			],
 		);
 		
+		$this->add_responsive_control(
+			'show_more_btn_alignment',
+			[
+				'label'     => __( 'Alignment', 'foodymat-core' ),
+				'type'      => Controls_Manager::CHOOSE,
+				'options'   => [
+					'left'   => [
+						'title' => __( 'Left', 'foodymat-core' ),
+						'icon'  => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => __( 'Center', 'foodymat-core' ),
+						'icon'  => 'eicon-text-align-center',
+					],
+					'right'  => [
+						'title' => __( 'Right', 'foodymat-core' ),
+						'icon'  => 'eicon-text-align-right',
+					],
+				],
+				'default' => 'center',
+				'selectors' => [
+					'{{WRAPPER}} .default-woo-layout .rt-button' => 'text-align: {{VALUE}};',
+				],
+			]
+		);
+		
+		
+		
 		$this->end_controls_section();
 		
 		$this->start_controls_section(
@@ -372,7 +400,7 @@ class WooLayout extends ElementorBase {
 				'type' => Controls_Manager::SELECT,
 				'label'   => esc_html__( 'Desktops: > 1199px', 'foodymat-core' ),
 				'options' => $this->rt_translate['cols'],
-				'default' => '2',
+				'default' => '4',
 			]
 		);
 		
@@ -382,7 +410,7 @@ class WooLayout extends ElementorBase {
 				'type' => Controls_Manager::SELECT,
 				'label'   => esc_html__( 'Desktops: > 991px', 'foodymat-core' ),
 				'options' => $this->rt_translate['cols'],
-				'default' => '2',
+				'default' => '4',
 			]
 		);
 		
@@ -392,7 +420,7 @@ class WooLayout extends ElementorBase {
 				'type' => Controls_Manager::SELECT,
 				'label'   => esc_html__( 'Tablets: > 767px', 'foodymat-core' ),
 				'options' => $this->rt_translate['cols'],
-				'default' => '4',
+				'default' => '6',
 			]
 		);
 		

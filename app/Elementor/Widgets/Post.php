@@ -709,6 +709,18 @@ class Post extends ElementorBase {
 				'type' => \Elementor\Controls_Manager::DIVIDER,
 			]
 		);
+		
+		$this->add_control(
+			'meta_icon_visibility',
+			[
+				'label'        => __( 'Meta Icon Visibility', 'foodymat-core' ),
+				'type'         => \Elementor\Controls_Manager::SWITCHER,
+				'label_on'     => __( 'Show', 'foodymat-core' ),
+				'label_off'    => __( 'Hide', 'foodymat-core' ),
+				'return_value' => 'yes',
+				'default'      => 'yes',
+			]
+		);
 
 		$this->add_control(
 			'author_visibility',
@@ -1466,12 +1478,12 @@ class Post extends ElementorBase {
 
 		$col_class = "col-lg-{$gird_column_desktop} col-md-{$gird_column_tab} col-sm-{$gird_column_mobile}";
 		?>
-        <div class="rt-el-post-wrapper blog-<?php echo esc_attr( $data['layout'] ) ?>">
+        <div class="rt-el-post-wrapper blog-<?php echo esc_attr( $data['layout'] ) ?>-layout">
 			<?php if ( $query->have_posts() ) : ?>
-                <div class="row <?php echo esc_attr( $data['item_space'] );?> justify-content-center">
+                <div class="row <?php echo esc_attr( $data['item_space'] );?>">
 					<?php $ade = $data['delay']; $adu = $data['duration'];
                     while ( $query->have_posts() ) : $query->the_post();
-						echo '<article class="foodymat-post-card ' . esc_attr( $col_class ) . ' ' . esc_attr( $data['animation'] ) . ' ' . esc_attr( $data['animation_effect'] ) . '" data-wow-delay= ' . esc_attr( $ade ) . "ms" .' data-wow-duration=' . esc_attr( $adu ) . "ms" .'>';
+						echo '<article class="foodymat-post-card blog-'. esc_attr( $data['layout'] ). ' ' . esc_attr( $col_class ) . ' ' . esc_attr( $data['animation'] ) . ' ' . esc_attr( $data['animation_effect'] ) . '" data-wow-delay= ' . esc_attr( $ade ) . "ms" .' data-wow-duration=' . esc_attr( $adu ) . "ms" .'>';
 						Fns::get_template( "elementor/post/$template", $data );
 						echo '</article>';
 	                    $ade = $ade + 200; $adu = $adu + 0; endwhile; ?>

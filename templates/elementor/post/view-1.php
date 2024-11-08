@@ -30,14 +30,19 @@ $comments_text   = sprintf( _n( 'Comment: %s', 'Comments: %s', $comments_number,
 
 ?>
     <div class="article-inner-wrapper">
+        <div class="thumb-above-title-wrap">
 	    <?php if( 'visible' === $thumbnail_visibility ) { ?>
 	    <?php foodymat_post_thumbnail( $project_thumbnail_size ); ?>
         <?php } ?>
+	    <?php if ( $cat_visibility ) { ?>
+            <div class="separate-meta title-above-meta">
+			    <?php echo foodymat_posted_in(); ?>
+            </div>
+	    <?php } ?>
+        </div>
         <div class="entry-wrapper">
             <header class="entry-header">
-                <?php if ( $cat_visibility ) { ?>
-                <div class="separate-meta title-above-meta"><?php echo foodymat_posted_in(); ?></div>
-                <?php } ?>
+                
                 <<?php echo esc_attr( $title_tag ) ?> class="entry-title default-max-width"><a href="<?php the_permalink();?>"><?php foodymat_html( $title, 'allow_title' ); ?></a></<?php echo esc_attr( $title_tag ) ?>>
 	            <?php if ( $has_entry_meta ) { ?>
                 <div class="rt-post-meta">
@@ -64,7 +69,7 @@ $comments_text   = sprintf( _n( 'Comment: %s', 'Comments: %s', $comments_number,
 	        <?php } ?>
             <?php if( 'visible' === $readmore_visibility ) { ?>
             <div class="rt-button entry-footer">
-                <a class="btn button-2" href="<?php the_permalink();?>">
+                <a class="btn button-6 read-more-btn" href="<?php the_permalink();?>">
 	                <?php echo esc_html( $readmore_text );?><i class="icon-rt-arrow-right-1"></i>
                 </a>
             </div>

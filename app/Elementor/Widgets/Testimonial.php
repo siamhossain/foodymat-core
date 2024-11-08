@@ -327,6 +327,21 @@ class Testimonial extends ElementorBase {
 			]
 		);
 
+		
+		
+		//Start countdown Style Tab
+		$this->start_controls_tabs(
+			'style_tabs'
+		);
+		
+		//Normal Style
+		$this->start_controls_tab(
+			'style_normal_tab',
+			[
+				'label' => __( 'Normal', 'foodymat-core' ),
+			]
+		);
+		
 		$this->add_control(
 			'box_bag_color',
 			[
@@ -337,7 +352,7 @@ class Testimonial extends ElementorBase {
 				],
 			]
 		);
-
+		
 		$this->add_group_control(
 			\Elementor\Group_Control_Border::get_type(),
 			[
@@ -345,6 +360,58 @@ class Testimonial extends ElementorBase {
 				'selector' => '{{WRAPPER}} .rt-testimonial-slider .slider-item',
 			]
 		);
+		
+		$this->add_group_control(
+			\Elementor\Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'box_shadow',
+				'label' => __('Box Shadow', 'foodymat-core'),
+				'selector' => '{{WRAPPER}} .rt-testimonial-slider .slider-item',
+			]
+		);
+		
+		$this->end_controls_tab();
+		
+		//Hover Style
+		$this->start_controls_tab(
+			'style_hover_tab',
+			[
+				'label' => __( 'Hover', 'foodymat-core' ),
+			]
+		);
+		
+		$this->add_control(
+			'bg_hover_color',
+			[
+				'type'      => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Background Color', 'foodymat-core' ),
+				'selectors' => [
+					'{{WRAPPER}} .rt-testimonial-slider .slider-item:hover'  => 'background-color: {{VALUE}}',
+				],
+			]
+		);
+		
+		$this->add_group_control(
+			\Elementor\Group_Control_Border::get_type(),
+			[
+				'name' => 'border_hover',
+				'selector' => '{{WRAPPER}} .rt-testimonial-slider .slider-item:hover',
+			]
+		);
+		
+		$this->add_group_control(
+			\Elementor\Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'box_shadow_hover',
+				'label' => __('Box Shadow', 'foodymat-core'),
+				'selector' => '{{WRAPPER}} .rt-testimonial-slider .slider-item:hover',
+			]
+		);
+		
+		$this->end_controls_tab();
+		
+		$this->end_controls_tabs();
+		
 		$this->add_responsive_control(
 			'alignment',
 			[

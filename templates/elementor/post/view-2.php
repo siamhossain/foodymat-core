@@ -18,6 +18,7 @@
  * @var $views_visibility           string
  * @var $title_tag                  string
  * @var $title_count                string
+ * @var $meta_icon_visibility       string
  */
 
 
@@ -38,36 +39,31 @@ $comments_text   = sprintf( _n( 'Comment: %s', 'Comments: %s', $comments_number,
 					<?php the_post_thumbnail( $project_thumbnail_size ); ?>
                 </a>
             </figure>
-	        <?php if ( $date_visibility && !empty( has_post_thumbnail() )) { ?>
-            <div class="posted-on">
-                <span class="day"><?php echo get_the_date( 'j' ); ?></span>
-                <span class="month"><?php echo get_the_date( 'M' ); ?></span>
-            </div>
-	        <?php } ?>
         </div>
 	<?php } ?>
     <div class="entry-wrapper">
         <header class="entry-header">
-            <<?php echo esc_attr( $title_tag ) ?> class="entry-title default-max-width"><a href="<?php the_permalink();?>"><?php foodymat_html( $title, 'allow_title' ); ?></a></<?php echo esc_attr( $title_tag ) ?>>
 			<?php if ( $has_entry_meta ) { ?>
                 <div class="rt-post-meta">
                     <ul class="entry-meta">
 						<?php if ( $author_visibility ) { ?>
-                            <li><i class="icon-rt-user-1"></i><?php echo foodymat_posted_by(esc_html__( 'by ', 'foodymat-core' )); ?></li>
-						<?php } if ( $date_visibility && empty( has_post_thumbnail() ) ) { ?>
-                            <li><i class="icon-rt-calender-4"></i><?php echo foodymat_posted_on(); ?></li>
-						<?php } if ( $cat_visibility ) { ?>
-                            <li><i class="icon-rt-tag"></i><?php echo foodymat_posted_in(); ?></li>
+                            <li><?php if ( $meta_icon_visibility ) { ?><i class="icon-rt-user-1"></i> <?php } ?> <?php echo foodymat_posted_by(esc_html__( 'by ', 'foodymat-core' )); ?></li>
+						<?php } if ( $cat_visibility )  { ?>
+                            <li><?php if ( $meta_icon_visibility ) { ?><i class="icon-rt-tag"></i> <?php } ?> <?php echo foodymat_posted_in(); ?></li>
+						<?php } if ( $date_visibility ) { ?>
+                            <li><?php if ( $meta_icon_visibility ) { ?><i class="icon-rt-calender-4"></i> <?php } ?> <?php echo foodymat_posted_on(); ?></li>
 						<?php } if ( $comment_visibility ) { ?>
-                            <li><i class="icon-rt-comments"></i><a href="<?php echo get_comments_link( get_the_ID() ); ?>"><?php echo wp_kses( $comments_text , 'allowed_html' );?></a></li>
+                            <li><?php if ( $meta_icon_visibility ) { ?><i class="icon-rt-comments"></i> <?php } ?> <a href="<?php echo get_comments_link( get_the_ID() ); ?>"><?php echo wp_kses( $comments_text , 'allowed_html' );?></a></li>
 						<?php } if ( $reading_visibility ) { ?>
-                            <li><i class="icon-rt-clock"></i><?php echo foodymat_reading_time(); ?></li>
+                            <li><?php if ( $meta_icon_visibility ) { ?><i class="icon-rt-clock"></i> <?php } ?> <?php echo foodymat_reading_time(); ?></li>
 						<?php } if ( $views_visibility ) { ?>
-                            <li><i class="icon-rt-eye"></i><?php echo rt_post_views(); ?></li>
+                            <li><?php if ( $meta_icon_visibility ) { ?><i class="icon-rt-eye"></i> <?php } ?> <?php echo rt_post_views(); ?></li>
 						<?php } ?>
                     </ul>
                 </div>
 			<?php } ?>
+            
+            <<?php echo esc_attr( $title_tag ) ?> class="entry-title default-max-width"><a href="<?php the_permalink();?>"><?php foodymat_html( $title, 'allow_title' ); ?></a></<?php echo esc_attr( $title_tag ) ?>>
         </header>
 		<?php if( 'visible' === $content_visibility ) { ?>
             <div class="entry-content">
@@ -76,7 +72,7 @@ $comments_text   = sprintf( _n( 'Comment: %s', 'Comments: %s', $comments_number,
 		<?php } ?>
 		<?php if( 'visible' === $readmore_visibility ) { ?>
             <div class="rt-button entry-footer">
-                <a class="btn button-2" href="<?php the_permalink();?>">
+                <a class="btn button-6" href="<?php the_permalink();?>">
 	                <?php echo esc_html( $readmore_text );?><i class="icon-rt-arrow-right-1"></i>
                 </a>
             </div>

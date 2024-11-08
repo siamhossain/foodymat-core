@@ -52,6 +52,7 @@ class Title extends ElementorBase {
 				'options'   => [
 					'layout-1' => __( 'Layout 01', 'foodymat-core' ),
 					'layout-2' => __( 'Layout 02', 'foodymat-core' ),
+					'layout-3' => __( 'Layout 03', 'foodymat-core' ),
 				],
 				'default'     => 'layout-1',
 			]
@@ -136,8 +137,8 @@ class Title extends ElementorBase {
 				'label'   => esc_html__( 'Description', 'foodymat-core' ),
 				'type'    => Controls_Manager::WYSIWYG,
 				'default'     => __('Manage and streamline operations across multiple locations, sales channels, and employees to improve efficiency and your bottom line.', 'foodymat-core' ),
-				'condition'  => [
-					'title_layout' => 'layout-1',
+				'condition' => [
+					'title_layout!' => 'layout-2',
 				],
 			]
 		);
@@ -232,6 +233,39 @@ class Title extends ElementorBase {
 					'{{WRAPPER}} .section-title-wrapper' => 'text-align: {{VALUE}};',
 				],
 				'separator' => 'before',
+				'condition'  => [
+					'title_layout!' => 'layout-3',
+				],
+			]
+		);
+		
+		$this->add_responsive_control(
+			'flex_alignment',
+			[
+				'label'     => __( 'Alignment flex', 'foodymat-core' ),
+				'type'      => Controls_Manager::CHOOSE,
+				'default'       => '',
+				'options'   => [
+					'flex-start'   => [
+						'title' => __( 'Left', 'foodymat-core' ),
+						'icon'  => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => __( 'Center', 'foodymat-core' ),
+						'icon'  => 'eicon-text-align-center',
+					],
+					'flex-end'  => [
+						'title' => __( 'Right', 'foodymat-core' ),
+						'icon'  => 'eicon-text-align-right',
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .title-inner-wrapper' => 'align-items: {{VALUE}};',
+				],
+				'separator' => 'before',
+				'condition'  => [
+					'title_layout' => 'layout-3',
+				],
 			]
 		);
 
@@ -266,6 +300,21 @@ class Title extends ElementorBase {
 				'selectors'   => [
 					'{{WRAPPER}} .section-title-wrapper .main-title span' => 'color: {{VALUE}}',
 				],
+			]
+		);
+		
+		//ls1
+		$this->add_control(
+			'main_title_color_bg',
+			[
+				'type'      => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Background Color', 'foodymat-core' ),
+				'selectors' => [
+					'{{WRAPPER}} .section-title-wrapper .main-title-wrap' => 'background-color: {{VALUE}}',
+				],
+				'condition'  => [
+					'title_layout'   => 'layout-3',
+				]
 			]
 		);
 
@@ -346,6 +395,21 @@ class Title extends ElementorBase {
 				'selector' => '{{WRAPPER}} .section-title-wrapper .main-title',
 			]
 		);
+		//ls2
+		$this->add_responsive_control(
+			'heading_padding',
+			[
+				'label'              => __( 'Padding', 'foodymat-core' ),
+				'type'               => Controls_Manager::DIMENSIONS,
+				'size_units'         => [ 'px', '%' ],
+				'selectors'          => [
+					'{{WRAPPER}} .section-title-wrapper .main-title-wrap' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}',
+				],
+				'condition'  => [
+					'title_layout'   => 'layout-3',
+				]
+			]
+		);
 
 		$this->add_responsive_control(
 			'heading_margin',
@@ -358,6 +422,20 @@ class Title extends ElementorBase {
 				],
 			]
 		);
+		//ls3
+		$this->add_group_control(
+			\Elementor\Group_Control_Border::get_type(),
+			[
+				'name'     => 'main_title_border',
+				'label'    => __( 'Border', 'foodymat-core' ),
+				'selector' => '{{WRAPPER}} .section-title-wrapper .main-title-wrap',
+				'condition'  => [
+					'title_layout'   => 'layout-3',
+				]
+			]
+		);
+		
+		
 
 		$this->add_control(
 			'title_image_aline',
@@ -481,6 +559,21 @@ class Title extends ElementorBase {
 				],
 			]
 		);
+		
+		$this->add_control(
+			'top_title_color_bg',
+			[
+				'type'      => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Background Color', 'foodymat-core' ),
+				'selectors' => [
+					'{{WRAPPER}} .section-title-wrapper .top-sub-title-wrap' => 'background-color: {{VALUE}}',
+				],
+				'condition'  => [
+					'title_layout'   => 'layout-3',
+				]
+			]
+		);
+		
 		$this->add_control(
 			'top_title_icon_color',
 			[
@@ -495,6 +588,7 @@ class Title extends ElementorBase {
 				],
 			]
 		);
+		
 		$this->add_group_control(
 			\Elementor\Group_Control_Background::get_type(),
 			[
@@ -536,6 +630,21 @@ class Title extends ElementorBase {
 				],
 			]
 		);
+		
+		$this->add_responsive_control(
+			'top_heading_padding',
+			[
+				'label'              => __( 'Padding', 'foodymat-core' ),
+				'type'               => Controls_Manager::DIMENSIONS,
+				'size_units'         => [ 'px', '%' ],
+				'selectors'          => [
+					'{{WRAPPER}} .section-title-wrapper .top-sub-title-wrap' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}',
+				],
+				'condition'  => [
+					'title_layout'   => 'layout-3',
+				]
+			]
+		);
 
 		$this->add_responsive_control(
 			'top_title_margin',
@@ -548,6 +657,20 @@ class Title extends ElementorBase {
 				],
 			]
 		);
+		
+		$this->add_group_control(
+			\Elementor\Group_Control_Border::get_type(),
+			[
+				'name'     => 'top_title_border',
+				'label'    => __( 'Border', 'foodymat-core' ),
+				'selector' => '{{WRAPPER}} .section-title-wrapper .top-sub-title-wrap',
+				'condition'  => [
+					'title_layout'   => 'layout-3',
+				]
+			]
+		);
+		
+		
 
 		$this->end_controls_section();
 
@@ -912,7 +1035,7 @@ class Title extends ElementorBase {
 				'label' => esc_html__( 'Description & List Settings', 'foodymat-core' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 				'condition'  => [
-					'title_layout' => 'layout-1',
+					'title_layout!' => 'layout-2',
 				],
 			]
 		);
@@ -936,7 +1059,36 @@ class Title extends ElementorBase {
 				],
 			]
 		);
-
+		
+		$this->add_control(
+			'description_title_color_bg',
+			[
+				'type'      => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Background Color', 'foodymat-core' ),
+				'selectors' => [
+					'{{WRAPPER}} .section-title-wrapper .description' => 'background-color: {{VALUE}}',
+				],
+				'condition'  => [
+					'title_layout'   => 'layout-3',
+				]
+			]
+		);
+		
+		$this->add_responsive_control(
+			'description_padding',
+			[
+				'label'              => __( 'Padding', 'foodymat-core' ),
+				'type'               => Controls_Manager::DIMENSIONS,
+				'size_units'         => [ 'px', '%' ],
+				'selectors'          => [
+					'{{WRAPPER}} .section-title-wrapper .description' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}',
+				],
+				'condition'  => [
+					'title_layout'   => 'layout-3',
+				]
+			]
+		);
+		
 		$this->add_responsive_control(
 			'description_margin',
 			[
@@ -946,6 +1098,18 @@ class Title extends ElementorBase {
 				'selectors'          => [
 					'{{WRAPPER}} .section-title-wrapper .description p' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}',
 				],
+			]
+		);
+		
+		$this->add_group_control(
+			\Elementor\Group_Control_Border::get_type(),
+			[
+				'name'     => 'description_border',
+				'label'    => __( 'Border', 'foodymat-core' ),
+				'selector' => '{{WRAPPER}} .section-title-wrapper .description',
+				'condition'  => [
+					'title_layout'   => 'layout-3',
+				]
 			]
 		);
 
@@ -989,6 +1153,25 @@ class Title extends ElementorBase {
 				'options'   => [
 					'list-layout-1' => __( 'Layout 1', 'foodymat-core' ),
 					'list-layout-2' => __( 'layout 2', 'foodymat-core' ),
+				],
+			]
+		);
+		
+		$this->add_control(
+			'list_item_spacing',
+			[
+				'label'     => esc_html__( 'List Item Spacing', 'foodymat-core' ),
+				'type'       => Controls_Manager::SLIDER,
+				'size_units'         => [ 'px' ],
+				'range'      => [
+					'px' => [
+						'min'  => 0,
+						'max'  => 50,
+						'step' => 1,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .section-title-wrapper .list-layout-1 li' => 'margin-bottom: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -1181,6 +1364,9 @@ class Title extends ElementorBase {
 		$data     = $this->get_settings();
 
 		switch ( $data['title_layout'] ) {
+			case 'layout-3':
+				$template = 'view-3';
+				break;
 			case 'layout-2':
 				$template = 'view-2';
 				break;

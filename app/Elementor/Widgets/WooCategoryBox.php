@@ -529,6 +529,72 @@ class WooCategoryBox extends ElementorBase {
 			],
 		);
 		
+		//Start category Style Tab
+		$this->start_controls_tabs(
+			'cat_style_tabs'
+		);
+		//Normal Style
+		$this->start_controls_tab(
+			'cat_style_normal_tab',
+			[
+				'label' => __( 'Normal', 'foodymat-core' ),
+			]
+		);
+		
+		$this->add_control(
+			'cat_bg_color',
+			[
+				'type'      => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Background Color', 'foodymat-core' ),
+				'selectors' => [
+					'{{WRAPPER}} .default-woo-category-box .woo-category-item'  => 'background-color: {{VALUE}}',
+				],
+			]
+		);
+		
+		$this->add_group_control(
+			\Elementor\Group_Control_Border::get_type(),
+			[
+				'name'     => 'cat_border',
+				'label'    => __( 'Border', 'foodymat-core' ),
+				'selector' => '{{WRAPPER}} .default-woo-category-box .woo-category-item',
+			]
+		);
+		
+		$this->end_controls_tab();
+		
+		//Hover Style
+		$this->start_controls_tab(
+			'cat_style_hover_tab',
+			[
+				'label' => __( 'Hover', 'foodymat-core' ),
+			]
+		);
+		
+		$this->add_control(
+			'cat_bg_hover_color',
+			[
+				'type'      => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Background Color', 'foodymat-core' ),
+				'selectors' => [
+					'{{WRAPPER}} .default-woo-category-box .woo-category-item:hover'  => 'background-color: {{VALUE}}',
+				],
+			]
+		);
+		
+		$this->add_group_control(
+			\Elementor\Group_Control_Border::get_type(),
+			[
+				'name'     => 'cat_border_hover',
+				'label'    => __( 'Border', 'foodymat-core' ),
+				'selector' => '{{WRAPPER}} .default-woo-category-box .woo-category-item:hover',
+			]
+		);
+		
+		$this->end_controls_tab();
+		
+		$this->end_controls_tabs();
+		
 		$this->end_controls_section();
 		
 		// Icon style
@@ -757,10 +823,11 @@ class WooCategoryBox extends ElementorBase {
 		$this->start_controls_section(
 			'slider_style',
 			[
-				'label' => esc_html__( 'Slider Style', 'foodymat-core' ),
+				'label' => esc_html__( 'Slider Navigation', 'foodymat-core' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'category_style' => ['2'],
+					'display_arrow'  => 'yes',
 				],
 			]
 		);
