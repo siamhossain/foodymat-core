@@ -30,8 +30,10 @@
 			}
 
 			$style = '';
+			$border = '';
 			if (!empty($social_icons['icon_color'])) {
 				$style .= 'color:' . esc_attr($social_icons['icon_color']) . '; ';
+				$style .= 'fill:' . esc_attr($social_icons['icon_color']) . '; ';
 			}
 			if (!empty($social_icons['icon_bg_color'])) {
 				$style .= 'background-color:' . esc_attr($social_icons['icon_bg_color']) . ';';

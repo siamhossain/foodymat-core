@@ -204,6 +204,7 @@ class PostMetaController {
 					'default' => __( 'Default from customizer', 'foodymat-core' ),
 					'1'       => __( 'Layout 1', 'foodymat-core' ),
 					'2'       => __( 'Layout 2', 'foodymat-core' ),
+					'3'       => __( 'Layout 3', 'foodymat-core' ),
 				],
 				'default' => 'default',
 			],

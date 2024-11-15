@@ -343,6 +343,7 @@ class ContactInfo extends ElementorBase {
 				],
 				'selectors'  => [
 					'{{WRAPPER}} .rt-contact-info .contact-list li i'   => 'font-size: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .rt-contact-info .contact-list li svg'   => 'width: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -354,6 +355,7 @@ class ContactInfo extends ElementorBase {
 				'label'     => esc_html__( 'List Icon Color', 'foodymat-core' ),
 				'selectors' => [
 					'{{WRAPPER}} .rt-contact-info .contact-list li i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .rt-contact-info .contact-list li svg' => 'fill: {{VALUE}}',
 				],
 			]
 		);
@@ -373,6 +375,7 @@ class ContactInfo extends ElementorBase {
 				],
 				'selectors'  => [
 					'{{WRAPPER}} .rt-contact-info .contact-list li i'   => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .rt-contact-info .contact-list li svg'   => 'margin-right: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);

@@ -67,7 +67,7 @@ class SocialIcon extends ElementorBase {
 		$repeater->add_control(
 			'icon_bg_color', [
 				'type' => Controls_Manager::COLOR,
-				'label'   => esc_html__( 'Icon BG Color', 'foodymat-core' ),
+				'label'   => esc_html__( 'Icon BG ColorX', 'foodymat-core' ),
 				'default'  => '',
 				'label_block' => true,
 			]
@@ -336,7 +336,7 @@ class SocialIcon extends ElementorBase {
 			[
 				'name'     => 'social_typo',
 				'label'    => esc_html__( 'Social Typo', 'foodymat-core' ),
-				'selector' => '{{WRAPPER}} .rt-social-icon .rt-social-item a',
+				'selector' => '{{WRAPPER}} .rt-social-icon .rt-social-item i',
 			]
 		);
 
