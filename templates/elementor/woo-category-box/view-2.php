@@ -93,8 +93,8 @@ $col_class = "col-xl-{$col_xl} col-lg-{$col_lg} col-md-{$col_md} col-sm-{$col_sm
         </div>
 	    <?php if ( $display_arrow == 'yes' ) { ?>
             <div class="swiper-navigation">
-                <div class="swiper-button swiper-button-prev"><i class="icon-rt-left-arrow"></i></div>
-                <div class="swiper-button swiper-button-next"><i class="icon-rt-right-arrow"></i></div>
+                <div class="swiper-button swiper-button-prev"><i class="icon-small-arrow-left"></i></div>
+                <div class="swiper-button swiper-button-next"><i class="icon-small-arrow-right"></i></div>
             </div>
 	    <?php } ?>
 	    <?php if ( $display_pagination == 'yes' ) { ?>

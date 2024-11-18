@@ -134,11 +134,7 @@
                             </div>
 	                        <?php if ($rating_showhide == 'yes') : ?>
                                 <div class="product-rating">
-                                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <circle cx="7" cy="6.99988" r="7" fill="#E9A800"/>
-                                        <path d="M7.00016 9.63488L9.07516 10.8899C9.45516 11.1199 9.92016 10.7799 9.82016 10.3499L9.27016 7.98988L11.1052 6.39988C11.4402 6.10988 11.2602 5.55988 10.8202 5.52488L8.40516 5.31988L7.46016 3.08988C7.29016 2.68488 6.71016 2.68488 6.54016 3.08988L5.59516 5.31488L3.18016 5.51988C2.74016 5.55488 2.56016 6.10488 2.89516 6.39488L4.73016 7.98488L4.18016 10.3449C4.08016 10.7749 4.54516 11.1149 4.92516 10.8849L7.00016 9.63488Z" fill="white"/>
-                                    </svg>
-    
+                                    <i class="icon-star-circle"></i>
                                     <?php if (function_exists('woocommerce_template_loop_rating')) : ?>
                                         <span>
                                         <?php echo esc_html(number_format((float)$average, 1, '.', '')); ?>
@@ -200,22 +196,22 @@
                                                 
                                                 $link = get_permalink($product->get_id());
                                                 $label = esc_html__('View options', 'panpie-core');
-                                                echo '<a href="' . esc_url($link) . '" class="cart-btn btn button-6"><i class="icon-rt-cart"></i>' . esc_html($label) . '</a>';
+                                                echo '<a href="' . esc_url($link) . '" class="cart-btn btn button-2"><i class="icon-rt-cart"></i>' . esc_html($label) . '</a>';
                                                 break;
                                             case 'grouped':
                                                 $link = get_permalink($product->get_id());
                                                 $label = esc_html__('Select Product', 'panpie-core');
-                                                echo '<a href="' . esc_url($link) . '" class="cart-btn btn button-6"><i class="icon-rt-cart"></i>' . esc_html($label) . '</a>';
+                                                echo '<a href="' . esc_url($link) . '" class="cart-btn btn button-2"><i class="icon-rt-cart"></i>' . esc_html($label) . '</a>';
                                                 break;
                                             case 'external':
                                                 $link = !empty($ext_product_url) ? $ext_product_url : get_permalink($product->get_id());
                                                 $label = !empty($ext_button_text) ? $ext_button_text : esc_html__('Read More', 'panpie-core');
-                                                echo '<a href="' . esc_url($link) . '" class="cart-btn btn button-6"><i class="icon-rt-cart"></i>' . esc_html($label) . '</a>';
+                                                echo '<a href="' . esc_url($link) . '" class="cart-btn btn button-2"><i class="icon-rt-cart"></i>' . esc_html($label) . '</a>';
                                                 break;
                                             default:
                                                 $link = esc_url($product->add_to_cart_url());
                                                 $label = esc_html__('Order Now', 'panpie-core');
-                                                echo '<a href="' . $link . '" class="cart-btn btn button-6"><i class="icon-rt-cart"></i>' . esc_html($label) . '</a>';
+                                                echo '<a href="' . $link . '" class="cart-btn btn button-2"><i class="icon-rt-cart"></i>' . esc_html($label) . '</a>';
                                                 break;
                                         }
                                     ?>
@@ -234,7 +230,7 @@
     </div>
 	<?php if ( $more_button == 'show' ) { ?>
 		<?php if ( !empty( $see_button_text ) ) { ?>
-            <div class="rt-button show-more-btn"><a class="btn button-6" href="<?php echo esc_url( $see_button_link );?>"><?php echo esc_html( $see_button_text );?></a></div>
+            <div class="rt-button show-more-btn"><a class="btn button-2" href="<?php echo esc_url( $see_button_link );?>"><?php echo esc_html( $see_button_text );?></a></div>
 		<?php } ?>
 	<?php } else { ?>
 		<?php Pagination::pagination($query);?>

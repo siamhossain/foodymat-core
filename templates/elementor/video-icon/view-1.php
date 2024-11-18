@@ -51,7 +51,7 @@ $range_two = ( $scroll_animation == 'yes' ) ? $range_two : '';
             <div class="icon-left">
                 <div class="icon-box">
                     <a class="popup-youtube video-popup-icon" href="<?php echo esc_url( $video_url ) ?>">
-                        <i class="icon-rt-play"></i>
+                        <i class="icon-play-stroke"></i>
                     </a>
                 </div>
             </div>

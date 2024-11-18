@@ -72,7 +72,7 @@ $query = new \WP_Query( $args );
 							                <?php } if ( $cat_visibility )  { ?>
                                                 <li><?php if ( $meta_icon_visibility ) { ?><i class="icon-rt-tag"></i> <?php } ?> <?php echo foodymat_posted_in(); ?></li>
 							                <?php } if ( $date_visibility ) { ?>
-                                                <li><?php if ( $meta_icon_visibility ) { ?><i class="icon-rt-calender-4"></i> <?php } ?> <?php echo foodymat_posted_on(); ?></li>
+                                                <li><?php if ( $meta_icon_visibility ) { ?><i class="icon-caleder-f"></i> <?php } ?> <?php echo foodymat_posted_on(); ?></li>
 							                <?php } if ( $comment_visibility ) { ?>
                                                 <li><?php if ( $meta_icon_visibility ) { ?><i class="icon-rt-comments"></i> <?php } ?> <a href="<?php echo get_comments_link( get_the_ID() ); ?>"><?php echo wp_kses( $comments_text , 'allowed_html' );?></a></li>
 							                <?php } if ( $reading_visibility ) { ?>

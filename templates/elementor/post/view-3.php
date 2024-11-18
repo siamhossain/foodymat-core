@@ -46,7 +46,7 @@ $comments_text   = sprintf( _n( 'Comment: %s', 'Comments: %s', $comments_number,
 						<?php if ( $author_visibility ) { ?>
                             <li><i class="icon-rt-user-1"></i><?php echo foodymat_posted_by(esc_html__( 'by ', 'foodymat-core' )); ?></li>
 						<?php } if ( $date_visibility ) { ?>
-                            <li><i class="icon-rt-calender-4"></i><?php echo foodymat_posted_on(); ?></li>
+                            <li><i class="icon-caleder-f"></i><?php echo foodymat_posted_on(); ?></li>
 						<?php } if ( $comment_visibility ) { ?>
                             <li><i class="icon-rt-comments"></i><a href="<?php echo get_comments_link( get_the_ID() ); ?>"><?php echo wp_kses( $comments_text , 'allowed_html' );?></a></li>
 						<?php } if ( $reading_visibility ) { ?>
