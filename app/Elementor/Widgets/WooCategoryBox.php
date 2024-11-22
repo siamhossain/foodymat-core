@@ -116,17 +116,29 @@ class WooCategoryBox extends ElementorBase {
 			],
 		);
 		
-		$this->add_control(
+//		$this->add_control(
+//			Group_Control_Image_Size::get_type(),
+//			[
+//
+//				'mode'    => 'group',
+//				'label'   => esc_html__( 'image size', 'foodymat-core' ),
+//				'name' => 'active_image_size',
+//				'separator' => 'none',
+//				'condition'   => array('icontype' => array( 'image' ) , 'imagetype' => array( 'active_image_tab' ) ),
+//			],
+//		);
+		
+		$this->add_group_control(
 			Group_Control_Image_Size::get_type(),
 			[
-				
 				'mode'    => 'group',
-				'label'   => esc_html__( 'image size', 'foodymat-core' ),
-				'name' => 'active_image_size',
+				'label'   => esc_html__( 'Image Size', 'foodymat-core' ),
+				'name' => 'active_image_size', // Unique name for the active image size (Line 85)
 				'separator' => 'none',
-				'condition'   => array('icontype' => array( 'image' ) , 'imagetype' => array( 'active_image_tab' ) ),
-			],
+				'condition'   => array('icontype' => array( 'image' ), 'imagetype' => array( 'active_image_tab' ) ),
+			]
 		);
+		
 		
 		$this->add_control(
 			'hover_image',
@@ -138,15 +150,26 @@ class WooCategoryBox extends ElementorBase {
 			],
 		);
 		
-		$this->add_control(
+//		$this->add_control(
+//			Group_Control_Image_Size::get_type(),
+//			[
+//				'mode'    => 'group',
+//				'label'   => esc_html__( 'image size', 'foodymat-core' ),
+//				'name' => 'hover_image_size',
+//				'separator' => 'none',
+//				'condition'   => array('icontype' => array( 'image' ) , 'imagetype' => array( 'hover_image_tab' ) ),
+//			],
+//		);
+		
+		$this->add_group_control(
 			Group_Control_Image_Size::get_type(),
 			[
 				'mode'    => 'group',
-				'label'   => esc_html__( 'image size', 'foodymat-core' ),
-				'name' => 'hover_image_size',
+				'label'   => esc_html__( 'Image Size', 'foodymat-core' ),
+				'name' => 'hover_image_size', // Unique name for the hover image size (Line 105)
 				'separator' => 'none',
-				'condition'   => array('icontype' => array( 'image' ) , 'imagetype' => array( 'hover_image_tab' ) ),
-			],
+				'condition'   => array('icontype' => array( 'image' ), 'imagetype' => array( 'hover_image_tab' ) ),
+			]
 		);
 		
 		$this->add_control(
