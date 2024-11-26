@@ -49,10 +49,22 @@ class WooLayout extends ElementorBase {
 		// find the category of products
 		
 		$terms  = get_terms( array( 'taxonomy' => 'product_cat', 'fields' => 'id=>name' ) );
-		$category_dropdown = array( '0' => __( 'Please Selecet category', 'foodymat-core' ) );
+		$category_dropdown = [ '0' => __( 'Please Selecet category', 'foodymat-core' ) ];
+		$options = [];
+		
+		$products = get_posts([
+			'post_type' => 'product',
+			'numberposts' => -1,
+		]);
 		
 		foreach ( $terms as $id => $name ) {
 			$category_dropdown[$id] = $name;
+		}
+		
+		
+		
+		foreach ( $products as $product ) {
+			$options[ $product->ID ] = $product->post_title;
 		}
 		
 		$this->start_controls_section(
@@ -71,15 +83,8 @@ class WooLayout extends ElementorBase {
 				'options' => array(
 					'style1' => esc_html__( 'Style 1', 'foodymat-core' ),
 					'style2' => esc_html__( 'Style 2', 'foodymat-core' ),
-					'style5' => esc_html__( 'Style 3', 'foodymat-core' ),
-					'style6' => esc_html__( 'Style 4', 'foodymat-core' ),
-					'style10' => esc_html__( 'Style 5', 'foodymat-core' ),
-					'style3' => esc_html__( 'Food Menu Isotope', 'foodymat-core' ),
-					'style8' => esc_html__( 'Food Menu Isotope 2', 'foodymat-core' ),
-					'style9' => esc_html__( 'Food Menu Isotope 3', 'foodymat-core' ),
-					'style11' => esc_html__( 'Food Menu Isotope 4', 'foodymat-core' ),
-					'style4' => esc_html__( 'Food Menu Carousel', 'foodymat-core' ),
-					'style7' => esc_html__( 'Food Menu Carousel 2', 'foodymat-core' ),
+					'style3' => esc_html__( 'Style 3', 'foodymat-core' ),
+					'style4' => esc_html__( 'Style 4', 'foodymat-core' ),
 				),
 				'default' => 'style1',
 			],
@@ -145,6 +150,18 @@ class WooLayout extends ElementorBase {
 				'default'   => '0',
 				'multiple'  => false,
 			],
+		);
+		
+		$this->add_control(
+			'product_ids',
+			[
+				'label' => __( 'Select Product', 'plugin-name' ),
+				'type' => \Elementor\Controls_Manager::SELECT2,
+				'options' => $options,
+				'default' => [''],
+				'multiple' => true,
+				'label_block' => true,
+			]
 		);
 		
 		$this->add_control(
@@ -215,6 +232,16 @@ class WooLayout extends ElementorBase {
 			[
 				'type'    => Controls_Manager::SWITCHER,
 				'label'   => esc_html__( 'Short Detail Show/Hide', 'foodymat-core' ),
+				'label_on'    => esc_html__( 'Show', 'foodymat-core' ),
+				'label_off'   => esc_html__( 'Hide', 'foodymat-core' ),
+				'default'     => 'yes',
+			],
+		);
+		$this->add_control(
+			'discount_flag_display',
+			[
+				'type'    => Controls_Manager::SWITCHER,
+				'label'   => esc_html__( 'Discount Flag Show/Hide', 'foodymat-core' ),
 				'label_on'    => esc_html__( 'Show', 'foodymat-core' ),
 				'label_off'   => esc_html__( 'Hide', 'foodymat-core' ),
 				'default'     => 'yes',
@@ -453,6 +480,12 @@ class WooLayout extends ElementorBase {
 		$data     = $this->get_settings();
 		
 		switch ( $data['style'] ) {
+			case 'style4':
+				$template = 'view-4';
+				break;
+			case 'style3':
+				$template = 'view-3';
+				break;
 			case 'style2':
 				$template = 'view-2';
 				break;

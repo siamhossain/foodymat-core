@@ -39,6 +39,7 @@
 	 * @var $style                      string
 	 * @var $more_button                string
 	 * @var $see_button_link            string
+	 * @var $discount_flag_display      string
 	 */
 	
 	
@@ -58,6 +59,10 @@
 	
 	$number_of_post = $itemnumber;
 	$post_sorting = $orderby;
+	$products = [];
+	
+	$product_ids = !empty($product_ids) ? $product_ids : [];
+	
 	
 	// Fetch and display WooCommerce products
 	$args = array(
@@ -68,6 +73,11 @@
 		'posts_per_page'    => $number_of_post,
 		'paged'             => $paged,
 	);
+	
+	// If there are selected product IDs, filter by them
+	if (!empty($product_ids)) {
+		$args['post__in'] = $product_ids;  // Only show selected products
+	}
 	
 	// Include category filter if set
 	if ($cat_single_box !== '0') {
@@ -145,21 +155,21 @@
 									?>
                                 </a>
                             </div>
-                            <?php if ( !empty ($discount_percentage ) ) { ?>
+	                        <?php if ( !empty ($discount_percentage ) && $discount_flag_display ) { ?>
                                 <div class="discount-flag">
                                     <span>
                                         <span class="price-percent"><?php echo $discount_percentage; ?></span>
                                         OFF
                                     </span>
                                 </div>
-                            <?php } elseif (!empty ($discount_amount) ) { ?>
+	                        <?php } elseif (!empty ($discount_amount) && $discount_flag_display ) { ?>
                                 <div class="discount-flag">
                                     <span>
                                         <span class="price-percent"><?php echo $discount_amount; ?></span>
                                         OFF UPTO <?php echo $discount_purchase_amount; ?>
                                     </span>
                                 </div>
-                            <?php } ?>
+	                        <?php } ?>
                         </div>
                         <div class="item-content">
                             <div class="product-categories">

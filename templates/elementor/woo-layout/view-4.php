@@ -43,6 +43,7 @@
 	 */
 	
 	
+	use RT\FoodMenuPro\Controllers\Discount\Discount;
 	use RT\FoodMenuPro\Helpers\FnsPro;
 	use RT\Foodymat\Modules\Pagination;
 	
@@ -87,34 +88,35 @@
 	
 	$query = new WP_Query($args);
 	
-	if ( $style === 'style2' ) {
-		$col_xl = '12';
-	}
-	
 	// Column classes
 	$col_class = "col-xl-{$col_xl} col-lg-{$col_lg} col-md-{$col_md} col-sm-{$col_sm} col-xs-{$col_xs}";
-	
-	//Discount data from FoodMenu
-	$settings = FnsPro::get_settings_option();
+    
+    //Discount data from FoodMenu
+    $settings = FnsPro::get_settings_option();
 	
 	$discount_purchase_amount = '';
 	$discount_amount = '';
 	$discount_percentage = '';
+    
+    if (! empty( $settings['fmp_fixed_order_amount'] ) ) {
+	    $discount_purchase_amount = wc_price( $settings['fmp_fixed_order_amount'] );
+    }
+    
+    if (! empty( $settings['fmp_fixed_discount'] ) ) {
+	    $discount_amount = wc_price( $settings['fmp_fixed_discount'] );
+    }
+    if (! empty( $settings['fmp_discount_percentage'] ) ) {
+	    $discount_percentage = wc_price( $settings['fmp_discount_percentage'] );
+    }
 	
-	if (! empty( $settings['fmp_fixed_order_amount'] ) ) {
-		$discount_purchase_amount = wc_price( $settings['fmp_fixed_order_amount'] );
-	}
-	
-	if (! empty( $settings['fmp_fixed_discount'] ) ) {
-		$discount_amount = wc_price( $settings['fmp_fixed_discount'] );
-	}
-	if (! empty( $settings['fmp_discount_percentage'] ) ) {
-		$discount_percentage = wc_price( $settings['fmp_discount_percentage'] );
-	}
+//	foreach ($settings as $key => $value) {
+//		echo "Key: $key, Value: $value<br>";
+//	}
 
 ?>
 
 <div class="default-woo-layout woo-layout-<?php echo esc_attr($style); ?>">
+   
     <div class="row <?php //echo esc_attr($item_space); ?>">
 		<?php if ($query->have_posts()) : ?>
 			<?php $i = 1; ?>
@@ -132,17 +134,17 @@
 				
 				$percentage_discount = get_post_meta($id, '_percentage_discount', true);
 				$min_subtotal = get_post_meta($id, '_min_subtotal', true);
-				$odd_product = ($i % 2 === 0) ? '' : 'row-reverse reverse';
-				$average = $product->get_average_rating();
+				$average_rating = $product->get_average_rating();
+				$rating_count = $product->get_rating_count();
 				?>
                 <div class="<?php echo esc_attr($col_class) ?>">
-                    <div class="product-item product-item-<?php echo esc_attr($style); ?> <?php echo esc_attr($odd_product); ?>">
+                    <div class="product-item product-item-<?php echo esc_attr($style); ?>">
                         <div class="img-wrap">
                             <div class="item-img">
                                 <a href="<?php the_permalink(); ?>">
 									<?php
 										if (has_post_thumbnail()) {
-											the_post_thumbnail('foodymat-size3');
+											the_post_thumbnail('foodymat-size8');
 										} else {
 											echo 'image not found';
 										}
@@ -150,32 +152,52 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="item-content">
-                            <div class="product-categories">
-								<?php
-									$categories = wc_get_product_category_list($id, ' ');
-									echo wp_kses($categories, 'alltext_allow');
-								?>
-                            </div>
-							<?php if ($rating_showhide == 'yes') : ?>
-                                <div class="product-rating">
-                                    <i class="icon-star-circle"></i>
-									<?php if (function_exists('woocommerce_template_loop_rating')) : ?>
-                                        <span>
-                                        <?php echo esc_html(number_format((float)$average, 1, '.', '')); ?>
-                                        </span>
-									<?php endif; ?>
+
+                        <div class="flag-wrap">
+		                    <?php if ( !empty ($discount_percentage ) && $discount_flag_display ) { ?>
+                                <div class="discount-flag">
+                                    <span>
+                                        <span class="price-percent"><?php echo $discount_percentage; ?></span>
+                                        OFF
+                                    </span>
                                 </div>
-							<?php endif; ?>
-							
-							<?php if ($title_showhide == 'yes') : ?>
+		                    <?php } elseif (!empty ($discount_amount) && $discount_flag_display ) { ?>
+                                <div class="discount-flag">
+                                    <span>
+                                        <span class="price-percent"><?php echo $discount_amount; ?></span>
+                                        OFF UPTO <?php echo $discount_purchase_amount; ?>
+                                    </span>
+                                </div>
+		                    <?php } ?>
+	                        
+	                        <?php if ($rating_showhide == 'yes') : ?>
+                                <div class="product-rating">
+                                
+			                        <?php
+				                        if ($average_rating) {
+					                        echo '<i class="icon-star-circle"></i> <span class="average-rating"> (' . number_format($average_rating, 1) . ')</span>';
+				                        }
+			                        ?>
+                                </div>
+	                        <?php endif; ?>
+                        </div>
+                        
+                        <div class="item-content">
+	                        <?php if ($title_showhide == 'yes') : ?>
                                 <h3 class="item-title">
                                     <a href="<?php the_permalink(); ?>">
-										<?php echo wp_kses($product_title, 'alltext_allow'); ?>
+				                        <?php echo wp_kses($product_title, 'alltext_allow'); ?>
                                     </a>
                                 </h3>
-							<?php endif; ?>
-							
+	                        <?php endif; ?>
+
+                            <div class="product-categories">
+		                        <?php
+			                        $categories = wc_get_product_category_list($id, ', ');
+			                        echo wp_kses($categories, 'alltext_allow');
+		                        ?>
+                            </div>
+       
 							<?php if ($excerpt_display == 'yes') : ?>
                                 <p class="excerpt"><?php echo wp_kses($excerpt, 'alltext_allow'); ?></p>
 							<?php endif; ?>
@@ -242,22 +264,6 @@
 									?>
                                 </div>
                             </div>
-	                        
-	                        <?php if ( !empty ($discount_percentage ) && $discount_flag_display ) { ?>
-                                <div class="discount-flag">
-                                    <span>
-                                        <span class="price-percent"><?php echo $discount_percentage; ?></span>
-                                        OFF
-                                    </span>
-                                </div>
-	                        <?php } elseif (!empty ($discount_amount) && $discount_flag_display ) { ?>
-                                <div class="discount-flag">
-                                    <span>
-                                        <span class="price-percent"><?php echo $discount_amount; ?></span>
-                                        OFF UPTO <?php echo $discount_purchase_amount; ?>
-                                    </span>
-                                </div>
-	                        <?php } ?>
                         </div>
                     </div>
                 </div>
