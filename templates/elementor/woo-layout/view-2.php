@@ -1,107 +1,238 @@
 <?php
-/**
- * @author  RadiusTheme
- * @since   1.0
- * @version 1.0
- * @var $data                       array
- * @var $woo_categories             array
- * @var $category_style             string
- * @var $final_icon_image_url       string
- * @var $final_icon_class           string
- * @var $woo_category               string
- * @var $cat_num_display            string
- * @var $cat_multi_category         string
- * @var $col_xl                     string
- * @var $col_lg                     string
- * @var $col_md                     string
- * @var $col_sm                     string
- * @var $col_xs                     string
- * @var $item_space                 string
- * @var $animation                  string
- * @var $animation_effect           string
- * @var $duration                   string
- * @var $delay                      string
- * @var $icon_class                 string
- * @var $uncategorized              string
- * @var $itemnumber              string
- * @var $orderby              string
- * @var $post_ordering              string
- * @var $title_count              string
- * @var $excerpt_count              string
- * @var $cat_single_box              string
- * @var $product              string
- * @var $price_showhide              string
- * @var $title_showhide              string
- * @var $excerpt_display              string
- * @var $args              string
- */
+	/**
+	 * @author  RadiusTheme
+	 * @since   1.0
+	 * @version 1.0
+	 * @var $data                       array
+	 * @var $woo_categories             array
+	 * @var $category_style             string
+	 * @var $final_icon_image_url       string
+	 * @var $final_icon_class           string
+	 * @var $woo_category               string
+	 * @var $cat_num_display            string
+	 * @var $cat_multi_category         string
+	 * @var $col_xl                     string
+	 * @var $col_lg                     string
+	 * @var $col_md                     string
+	 * @var $col_sm                     string
+	 * @var $col_xs                     string
+	 * @var $item_space                 string
+	 * @var $animation                  string
+	 * @var $animation_effect           string
+	 * @var $duration                   string
+	 * @var $delay                      string
+	 * @var $icon_class                 string
+	 * @var $uncategorized              string
+	 * @var $itemnumber                 string
+	 * @var $orderby                    string
+	 * @var $post_ordering              string
+	 * @var $title_count                string
+	 * @var $excerpt_count              string
+	 * @var $cat_single_box             string
+	 * @var $rating_showhide            string
+	 * @var $product                    string
+	 * @var $price_showhide             string
+	 * @var $title_showhide             string
+	 * @var $excerpt_display            string
+	 * @var $args                       string
+	 * @var $post_sorting               string
+	 * @var $style                      string
+	 * @var $more_button                string
+	 * @var $see_button_link            string
+	 */
 	
 	
+	use RT\Foodymat\Modules\Pagination;
 	
-	$args = [
-		'post_type' => 'product',
-	];
- 
-	$products = new WP_Query($args);
-
- 
-
+	if ( get_query_var('paged') ) {
+		$paged = get_query_var('paged');
+	}
+	else if ( get_query_var('page') ) {
+		$paged = get_query_var('page');
+	}
+	else {
+		$paged = 1;
+	}
+	
+	$number_of_post = $itemnumber;
+	$post_sorting = $orderby;
+	
+	// Fetch and display WooCommerce products
+	$args = array(
+		'post_type'         => 'product',
+		'post_status'       => 'publish',
+		'orderby'           => $post_sorting,
+		'order'             => $post_ordering,
+		'posts_per_page'    => $number_of_post,
+		'paged'             => $paged,
+	);
+	
+	// Include category filter if set
+	if ($cat_single_box !== '0') {
+		$args['tax_query'] = [
+			[
+				'taxonomy' => 'product_cat',
+				'field' => 'term_id',
+				'terms' => $cat_single_box,
+			],
+		];
+	}
+	
+	$query = new WP_Query($args);
+	
+	if ( $style === 'style2' ) {
+		$col_xl = '12';
+	}
+	
+	// Column classes
+	$col_class = "col-xl-{$col_xl} col-lg-{$col_lg} col-md-{$col_md} col-sm-{$col_sm} col-xs-{$col_xs}";
 
 ?>
 
-
-	
-<div class="layout-style-2">
-    <div class="container">
-        <div class="row">
-            
-            <?php
-                if ( $products->have_posts() ) {
-                    while ($products->have_posts() ) {
-                        $products->the_post();
-	                    $price = get_post_meta( get_the_ID(), '_regular_price', true);
-	                    $sale = get_post_meta( get_the_ID(), '_sale_price', true);
-                        
-                        ?>
-                        
-
-                        
-                        <div class="col-md-4">
-                            <div class="product-item">
-                                <div class="product-thumb">
-                                    <a href="<?php the_permalink(); ?>">
-	                                    <?php
-                                            if ( has_post_thumbnail() ) {
-                                                the_post_thumbnail('foodymat-size4');
-                                            } else {
-                                                echo 'Image not found';
-                                            }
-                                        ?>
-                                    </a>
-                                </div>
-                                <div class="product-content">
-                                    <h3 class="title">
-                                        <a href="<?php the_permalink(); ?>"> <?php echo esc_html( get_the_title() ); ?> </a>
-                                    </h3>
-                                    <p class="text"><?php echo esc_html( get_the_excerpt() ); ?></p>
-                                    <p class="price"> <?php echo esc_html($price) ?> </p>
-                                    <p class="price"> <?php echo esc_html($sale) ?> </p>
-                                </div>
+<div class="default-woo-layout woo-layout-<?php echo esc_attr($style); ?>">
+    <div class="row <?php //echo esc_attr($item_space); ?>">
+		<?php if ($query->have_posts()) : ?>
+			<?php $i = 1; ?>
+			<?php while ($query->have_posts()) : $query->the_post(); ?>
+				<?php
+				$id = get_the_ID();
+				$excerpt = wp_trim_words(get_the_excerpt(), $excerpt_count);
+				$product_title = wp_trim_words(get_the_title(), $title_count, '');
+				global $product;
+				$currency = get_woocommerce_currency_symbol();
+				$price = get_post_meta($id, '_regular_price', true);
+				$sale = get_post_meta($id, '_sale_price', true);
+				$ext_button_text = get_post_meta($id, '_button_text', true);
+				$ext_product_url = get_post_meta($id, '_product_url', true);
+				
+				$percentage_discount = get_post_meta($id, '_percentage_discount', true);
+				$min_subtotal = get_post_meta($id, '_min_subtotal', true);
+				$odd_product = ($i % 2 === 0) ? '' : 'row-reverse reverse';
+				$average = $product->get_average_rating();
+				?>
+                <div class="<?php echo esc_attr($col_class) ?>">
+                    <div class="product-item product-item-<?php echo esc_attr($style); ?> <?php echo esc_attr($odd_product); ?>">
+                        <div class="img-wrap">
+                            <div class="item-img">
+                                <a href="<?php the_permalink(); ?>">
+									<?php
+										if (has_post_thumbnail()) {
+											the_post_thumbnail('foodymat-size3');
+										} else {
+											echo 'image not found';
+										}
+									?>
+                                </a>
                             </div>
                         </div>
-            <?php
-                    }
-                }
-            ?>
-    
-        </div>
+                        <div class="item-content">
+                            <div class="product-categories">
+								<?php
+									$categories = wc_get_product_category_list($id, ' ');
+									echo wp_kses($categories, 'alltext_allow');
+								?>
+                            </div>
+							<?php if ($rating_showhide == 'yes') : ?>
+                                <div class="product-rating">
+                                    <i class="icon-star-circle"></i>
+									<?php if (function_exists('woocommerce_template_loop_rating')) : ?>
+                                        <span>
+                                        <?php echo esc_html(number_format((float)$average, 1, '.', '')); ?>
+                                        </span>
+									<?php endif; ?>
+                                </div>
+							<?php endif; ?>
+							
+							<?php if ($title_showhide == 'yes') : ?>
+                                <h3 class="item-title">
+                                    <a href="<?php the_permalink(); ?>">
+										<?php echo wp_kses($product_title, 'alltext_allow'); ?>
+                                    </a>
+                                </h3>
+							<?php endif; ?>
+							
+							<?php if ($excerpt_display == 'yes') : ?>
+                                <p class="excerpt"><?php echo wp_kses($excerpt, 'alltext_allow'); ?></p>
+							<?php endif; ?>
+
+                            <div class="price-order-btn-wrap">
+								<?php if ($price_showhide == 'yes') : ?>
+                                    <div class="item-price">
+										<?php
+											switch ($product->get_type()) {
+												case 'variable':
+													$min_price = $product->get_variation_price('min', true);
+													$max_price = $product->get_variation_price('max', true);
+													echo wp_kses($currency . number_format($min_price, 2) . ' - ' . $currency . number_format($max_price, 2), 'alltext_allow');
+													break;
+												case 'grouped':
+													$link = get_permalink($product->get_id());
+													echo '<a href="' . esc_url($link) . '">' . esc_html__('View Product', 'panpie-core') . '</a>';
+													break;
+												case 'external':
+													$link = !empty($ext_product_url) ? $ext_product_url : get_permalink($product->get_id());
+													$label = !empty($ext_button_text) ? $ext_button_text : esc_html__('Read More', 'panpie-core');
+													echo '<a href="' . esc_url($link) . '">' . wp_kses($label, 'alltext_allow') . '</a>';
+													break;
+												default:
+													//												echo wp_kses($product->get_price_html(), 'alltext_allow');
+													if ($product->is_on_sale() && !empty($sale)) {
+														echo ' <span class="sale-price">' . esc_html($currency . number_format($sale, 0)) . '</span>';
+														echo '<span class="original-price"><del>' . esc_html($currency . number_format($price, 0)) . '</del></span>';
+													} else {
+														// If not on sale, just show the regular price
+														echo '<span class="regular-price">' . esc_html($currency . number_format($price, 2)) . '</span>';
+													}
+													break;
+											}
+										?>
+                                    </div>
+								<?php endif; ?>
+
+                                <div class="btn-wrap rt-button">
+									<?php
+										switch ($product->get_type()) {
+											case 'variable':
+												
+												$link = get_permalink($product->get_id());
+												$label = esc_html__('View options', 'panpie-core');
+												echo '<a href="' . esc_url($link) . '" class="cart-btn btn button-2"><i class="icon-rt-cart"></i>' . esc_html($label) . '</a>';
+												break;
+											case 'grouped':
+												$link = get_permalink($product->get_id());
+												$label = esc_html__('Select Product', 'panpie-core');
+												echo '<a href="' . esc_url($link) . '" class="cart-btn btn button-2"><i class="icon-rt-cart"></i>' . esc_html($label) . '</a>';
+												break;
+											case 'external':
+												$link = !empty($ext_product_url) ? $ext_product_url : get_permalink($product->get_id());
+												$label = !empty($ext_button_text) ? $ext_button_text : esc_html__('Read More', 'panpie-core');
+												echo '<a href="' . esc_url($link) . '" class="cart-btn btn button-2"><i class="icon-rt-cart"></i>' . esc_html($label) . '</a>';
+												break;
+											default:
+												$link = esc_url($product->add_to_cart_url());
+												$label = esc_html__('Order Now', 'panpie-core');
+												echo '<a href="' . $link . '" class="cart-btn btn button-2"><i class="icon-rt-cart"></i>' . esc_html($label) . '</a>';
+												break;
+										}
+									?>
+                                </div>
+                            </div>
+
+                            <div class="discount-flag">
+                                <span><?php echo esc_html($percentage_discount); ?> OFF UPTO <?php echo esc_html($min_subtotal); ?></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+				<?php $i++; ?>
+			<?php endwhile; ?>
+		<?php endif; ?>
     </div>
+	<?php if ( $more_button == 'show' ) { ?>
+		<?php if ( !empty( $see_button_text ) ) { ?>
+            <div class="rt-button show-more-btn"><a class="btn button-2" href="<?php echo esc_url( $see_button_link );?>"><?php echo esc_html( $see_button_text );?></a></div>
+		<?php } ?>
+	<?php } else { ?>
+		<?php Pagination::pagination($query);?>
+	<?php } ?>
 </div>
-
-
-<?php
-	echo '<pre>';
-	print_r($products) ;
-	echo '<pre>';
-?>
-
