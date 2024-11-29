@@ -59,7 +59,6 @@
 	
 	$number_of_post = $itemnumber;
 	$post_sorting = $orderby;
-	$products = [];
 	
 	$product_ids = !empty($product_ids) ? $product_ids : [];
 	
@@ -76,8 +75,10 @@
 	
 	// If there are selected product IDs, filter by them
 	if (!empty($product_ids)) {
-		$args['post__in'] = $product_ids;  // Only show selected products
+		$args['post__in'] = $product_ids;
 	}
+	
+	
 	
 	// Include category filter if set
 	if ($cat_single_box !== '0') {

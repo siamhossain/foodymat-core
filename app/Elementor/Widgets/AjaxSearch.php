@@ -50,11 +50,39 @@ class AjaxSearch extends ElementorBase {
 		);
 
 		$this->add_control(
+			'layout',
+			[
+				'label'       => esc_html__( 'Search Layout', 'foodymat-core' ),
+				'type'        => Controls_Manager::SELECT2,
+				'options'   => [
+					'layout-1' => __( 'Blog Search', 'foodymat-core' ),
+					'layout-2' => __( 'Product Search', 'foodymat-core' ),
+				],
+				'default'     => 'layout-1',
+			]
+		);
+
+		$this->add_control(
 			'placeholder',
 			[
 				'type'        => Controls_Manager::TEXT,
 				'label'       => esc_html__( 'Placeholder Text', 'foodymat-core' ),
 				'default'     => __( 'Describe what you want or hit a  tag below . . ', 'foodymat-core' ),
+				'condition' => [
+					'layout' => ['layout-1'],
+				],
+			]
+		);
+		
+		$this->add_control(
+			'product_placeholder',
+			[
+				'type'        => Controls_Manager::TEXT,
+				'label'       => esc_html__( 'Placeholder Text', 'foodymat-core' ),
+				'default'     => __( 'Type Your Products ...', 'foodymat-core' ),
+				'condition' => [
+					'layout' => ['layout-2'],
+				],
 			]
 		);
 
@@ -77,6 +105,9 @@ class AjaxSearch extends ElementorBase {
 				'label_on'     => __( 'On', 'foodymat-core' ),
 				'label_off'    => __( 'Off', 'foodymat-core' ),
 				'default'       => 'yes',
+				'condition' => [
+					['layout-1', 'layout-2'],
+				],
 			]
 		);
 
@@ -87,6 +118,7 @@ class AjaxSearch extends ElementorBase {
 				'label'       => esc_html__( 'Button Text', 'foodymat-core' ),
 				'default'     => __( 'Generate', 'foodymat-core' ),
 				'condition' => [
+					'layout' => ['layout-1', 'layout-2'],
 					'btn_display' => ['yes'],
 				],
 			]
@@ -98,6 +130,9 @@ class AjaxSearch extends ElementorBase {
 				'type'        => Controls_Manager::TEXT,
 				'label'       => esc_html__( 'Popular Search', 'foodymat-core' ),
 				'default'     => __( 'Popular Search:', 'foodymat-core' ),
+				'condition' => [
+					'layout' => ['layout-1'],
+				],
 			]
 		);
 
@@ -113,6 +148,9 @@ class AjaxSearch extends ElementorBase {
 					['searches_word' => 'Business', ],
 					['searches_word' => 'Agency', ],
 					['searches_word' => 'Portfolio', ],
+				],
+				'condition' => [
+					'layout' => ['layout-1'],
 				],
 			]
 		);
@@ -135,6 +173,7 @@ class AjaxSearch extends ElementorBase {
 				'label'     => esc_html__( 'Color', 'foodymat-core' ),
 				'selectors' => [
 					'{{WRAPPER}} .rt-search-box-form .search-box-input' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .rt-advanced-search .product-search-form' => 'color: {{VALUE}}',
 				],
 			]
 		);
@@ -146,6 +185,7 @@ class AjaxSearch extends ElementorBase {
 				'label'     => esc_html__( 'Background Color', 'foodymat-core' ),
 				'selectors' => [
 					'{{WRAPPER}} .rt-search-box-form' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .rt-search-box-wrap form' => 'background-color: {{VALUE}}',
 				],
 			]
 		);
@@ -169,6 +209,8 @@ class AjaxSearch extends ElementorBase {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .rt-search-box-form .search-box-input' => 'height: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} ul.rt-action-list .rt-btn' => 'height: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .rt-advanced-search .product-search-form' => 'height: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -181,6 +223,7 @@ class AjaxSearch extends ElementorBase {
 				'size_units'         => [ 'px' ],
 				'selectors'          => [
 					'{{WRAPPER}} .rt-search-box-form' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}',
+					'{{WRAPPER}} .rt-search-box-wrap form' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}',
 				],
 				'separator' => 'before',
 			]
@@ -194,6 +237,7 @@ class AjaxSearch extends ElementorBase {
 				'size_units'         => [ 'px' ],
 				'selectors'          => [
 					'{{WRAPPER}} .rt-search-box-form' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}',
+					'{{WRAPPER}} .rt-search-box-wrap form' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}',
 				],
 				'separator' => 'before',
 			]
@@ -204,6 +248,20 @@ class AjaxSearch extends ElementorBase {
 			[
 				'name' => 'input_border',
 				'selector' => '{{WRAPPER}} .rt-search-box-form',
+				'condition' => [
+					'layout' => ['layout-1'],
+				],
+			]
+		);
+
+		$this->add_group_control(
+			\Elementor\Group_Control_Border::get_type(),
+			[
+				'name' => 'input_product_border',
+				'selector' => '{{WRAPPER}} .rt-search-box-wrap form',
+				'condition' => [
+					'layout' => ['layout-2'],
+				],
 			]
 		);
 
@@ -222,8 +280,8 @@ class AjaxSearch extends ElementorBase {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'button_typo',
-				'label'    => esc_html__( 'Typography', 'foodymat-core' ),
-				'selector' => '{{WRAPPER}} .rt-search-box-form .rt-search-box-btn',
+				'label'    => esc_html__( 'Typo', 'foodymat-core' ),
+				'selector' => '{{WRAPPER}} .rt-search-box-form .rt-search-box-btn, {{WRAPPER}} .rt-advanced-search .input-group-append button',
 			]
 		);
 
@@ -235,6 +293,7 @@ class AjaxSearch extends ElementorBase {
 				'size_units'         => [ 'px' ],
 				'selectors'          => [
 					'{{WRAPPER}} .rt-search-box-form .rt-search-box-btn' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}',
+					'{{WRAPPER}} .rt-advanced-search .input-group-append button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}',
 				],
 				'separator' => 'before',
 			]
@@ -259,6 +318,7 @@ class AjaxSearch extends ElementorBase {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .rt-search-box-form .rt-search-box-btn' => 'width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .rt-advanced-search .input-group-append button' => 'width: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -282,6 +342,7 @@ class AjaxSearch extends ElementorBase {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .rt-search-box-form .rt-search-box-btn' => 'height: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .rt-advanced-search .input-group-append button' => 'height: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -305,6 +366,7 @@ class AjaxSearch extends ElementorBase {
 				'label'     => esc_html__( 'Color', 'foodymat-core' ),
 				'selectors' => [
 					'{{WRAPPER}} .rt-search-box-form .rt-search-box-btn' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .rt-advanced-search .input-group-append button' => 'color: {{VALUE}}',
 				],
 			]
 		);
@@ -320,7 +382,7 @@ class AjaxSearch extends ElementorBase {
 						'label' => esc_html__( 'Background', 'foodymat-core' ),
 					],
 				],
-				'selector' => '{{WRAPPER}} .rt-search-box-form .rt-search-box-btn',
+				'selector' => '{{WRAPPER}} .rt-search-box-form .rt-search-box-btn, {{WRAPPER}} .rt-advanced-search .input-group-append button',
 			]
 		);
 
@@ -328,7 +390,7 @@ class AjaxSearch extends ElementorBase {
 			\Elementor\Group_Control_Border::get_type(),
 			[
 				'name' => 'button_border',
-				'selector' => '{{WRAPPER}} .rt-search-box-form .rt-search-box-btn',
+				'selector' => '{{WRAPPER}} .rt-search-box-form .rt-search-box-btn, {{WRAPPER}} .rt-advanced-search .input-group-append button',
 			]
 		);
 
@@ -337,7 +399,7 @@ class AjaxSearch extends ElementorBase {
 			[
 				'name' => 'button_box_shadow',
 				'label' => __('Box Shadow', 'foodymat-core'),
-				'selector' => '{{WRAPPER}} .rt-search-box-form .rt-search-box-btn',
+				'selector' => '{{WRAPPER}} .rt-search-box-form .rt-search-box-btn, {{WRAPPER}} .rt-advanced-search .input-group-append button',
 			]
 		);
 
@@ -357,6 +419,7 @@ class AjaxSearch extends ElementorBase {
 				'label'     => esc_html__( 'Color', 'foodymat-core' ),
 				'selectors' => [
 					'{{WRAPPER}} .rt-search-box-form .rt-search-box-btn:hover' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .rt-advanced-search .input-group-append button:hover' => 'color: {{VALUE}}',
 				],
 			]
 		);
@@ -372,7 +435,7 @@ class AjaxSearch extends ElementorBase {
 						'label' => esc_html__( 'Background', 'foodymat-core' ),
 					],
 				],
-				'selector' => '{{WRAPPER}} .rt-search-box-form .rt-search-box-btn:hover',
+				'selector' => '{{WRAPPER}} .rt-search-box-form .rt-search-box-btn:hover, {{WRAPPER}} .rt-advanced-search .input-group-append button:hover',
 			]
 		);
 
@@ -380,7 +443,7 @@ class AjaxSearch extends ElementorBase {
 			\Elementor\Group_Control_Border::get_type(),
 			[
 				'name' => 'button_hover_border',
-				'selector' => '{{WRAPPER}} .rt-search-box-form .rt-search-box-btn:hover',
+				'selector' => '{{WRAPPER}} .rt-search-box-form .rt-search-box-btn:hover, {{WRAPPER}} .rt-advanced-search .input-group-append button:hover',
 			]
 		);
 
@@ -389,7 +452,7 @@ class AjaxSearch extends ElementorBase {
 			[
 				'name' => 'button_hover_box_shadow',
 				'label' => __('Box Shadow', 'foodymat-core'),
-				'selector' => '{{WRAPPER}} .rt-search-box-form .rt-search-box-btn:hover',
+				'selector' => '{{WRAPPER}} .rt-search-box-form .rt-search-box-btn:hover, {{WRAPPER}} .rt-advanced-search .input-group-append button:hover',
 			]
 		);
 
@@ -415,6 +478,7 @@ class AjaxSearch extends ElementorBase {
 				'label'     => esc_html__( 'Category Color', 'foodymat-core' ),
 				'selectors' => [
 					'{{WRAPPER}} .rt-search-box-form .category-selector .nice-select span' => 'color: {{VALUE}}',
+					'{{WRAPPER}} ul.rt-action-list .rt-btn' => 'color: {{VALUE}}',
 				],
 			]
 		);
@@ -425,6 +489,7 @@ class AjaxSearch extends ElementorBase {
 				'label'     => esc_html__( 'Category List Color', 'foodymat-core' ),
 				'selectors' => [
 					'{{WRAPPER}} .rt-search-box-form .category-selector .nice-select .list li' => 'color: {{VALUE}}',
+					'{{WRAPPER}} ul.rt-action-list .rt-drop-menu li' => 'color: {{VALUE}}',
 				],
 			]
 		);
@@ -435,6 +500,7 @@ class AjaxSearch extends ElementorBase {
 				'label'     => esc_html__( 'Category Background Color', 'foodymat-core' ),
 				'selectors' => [
 					'{{WRAPPER}} .rt-search-box-form .category-selector .nice-select .list' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} ul.rt-action-list .rt-drop-menu' => 'background-color: {{VALUE}}',
 				],
 			]
 		);
@@ -442,7 +508,7 @@ class AjaxSearch extends ElementorBase {
 		$this->add_control(
 			'Popular_heading',
 			[
-				'label'     => __( 'Popular Search Item', 'foodymat-core' ),
+				'label'     => __( 'Popular search item use for layout 1', 'foodymat-core' ),
 				'type'      => \Elementor\Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -516,7 +582,16 @@ class AjaxSearch extends ElementorBase {
 
 	protected function render() {
 		$data     = $this->get_settings();
-		$template = 'view-1';
+
+		switch ( $data['layout'] ) {
+			case 'layout-2':
+			$template = 'view-2';
+			break;
+			default:
+			$template = 'view-1';
+			break;
+		}
+
 		Fns::get_template( "elementor/ajax-search/$template", $data );
 	}
 

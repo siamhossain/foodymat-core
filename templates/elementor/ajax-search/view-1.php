@@ -5,8 +5,8 @@
  * @version 1.0
  * @var $placeholder                      string
  * @var $category_display                 string
- * @var $btn_display                         string
- * @var $button_text                         string
+ * @var $btn_display                      string
+ * @var $button_text                      string
  * @var $popular_text                     string
  * @var $word_repeat                      string
  */
@@ -51,14 +51,14 @@ foreach ( $terms as $category ) {
             <div id="rt_datafetch" class="rt-data-fetch"></div>
         </form>
     </div>
-<!--    <div class="rt-search-text d-md-flex">-->
-<!--        <span class="popular-label">--><?php //echo wp_kses_post( $popular_text ); ?><!--</span>-->
-<!--        <ul class="rt-search-key rt-addon-search">-->
-<!--			--><?php //foreach ( $word_repeat as $rtword ) { ?>
-<!--                <li class="keyword"><a href="#">--><?php //echo wp_kses_post($rtword['searches_word']); ?><!--</a></li>-->
-<!--			--><?php //} ?>
-<!--        </ul>-->
-<!--    </div>-->
+    <div class="rt-search-text d-md-flex">
+        <span class="popular-label"><?php echo wp_kses_post( $popular_text ); ?></span>
+        <ul class="rt-search-key rt-addon-search">
+			<?php foreach ( $word_repeat as $rtword ) { ?>
+                <li class="keyword"><a href="#"><?php echo wp_kses_post($rtword['searches_word']); ?></a></li>
+			<?php } ?>
+        </ul>
+    </div>
 </div>
 
 

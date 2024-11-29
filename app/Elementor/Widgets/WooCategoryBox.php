@@ -173,7 +173,7 @@ class WooCategoryBox extends ElementorBase {
 		);
 		
 		$this->add_control(
-			'item_space',
+				'item_space',
 			[
 				'type'        => Controls_Manager::SELECT,
 				'label'   => esc_html__( 'Item Gutter', 'foodymat-core' ),
@@ -186,6 +186,9 @@ class WooCategoryBox extends ElementorBase {
 					'g-5' => __( 'Gutters 5', 'foodymat-core' ),
 				],
 				'default' => 'g-4',
+				'condition'   => [
+					'category_style!' => ['2'],
+				],
 			]
 		);
 		

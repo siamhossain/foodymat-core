@@ -25,7 +25,6 @@
  * @var $animation_effect           string
  * @var $duration                   string
  * @var $delay                      string
- * @var $item_space                 string
  * @var $arrow_hover_visibility     string
  * @var $swiper_data                string
  * @var $display_arrow              string
