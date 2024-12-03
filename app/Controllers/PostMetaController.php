@@ -410,6 +410,12 @@ class PostMetaController {
 				'type'    => 'text',
 				'default' => '',
 			],
+			
+			'rt_team_experience' => [
+				'label'   => __( 'Team Experience', 'foodymat-core' ),
+				'type'    => 'text',
+				'default' => '',
+			],
 
 		] );
 	}
