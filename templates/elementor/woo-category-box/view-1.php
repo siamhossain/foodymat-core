@@ -27,37 +27,40 @@
  * @var $delay                      string
  * @var $icon_class                 string
  * @var $uncategorized              string
+ * @var $cat_itemnumber             string
  */
 	
 
 use Elementor\Icons_Manager;
-
 //fetch all Categories
 $product_categories = get_terms(array(
     'taxonomy' => 'product_cat',
     'orderby' => 'count',
     'hide_empty' => false,
+    'number' => 0,
     
 ));
 
 //column controls
 $col_class = "col-xl-{$col_xl} col-lg-{$col_lg} col-md-{$col_md} col-sm-{$col_sm} col-xs-{$col_xs}";
-	
-//    echo '<pre>';
-//print_r($woo_categories);
-//    echo '</pre>';
 
 ?>
 
 <div class="default-woo-category-box woo-category-box-<?php echo esc_attr( $category_style ); ?>">
     <div class="row <?php echo esc_attr( $item_space );?>">
+        
             <?php
+	            $displayed_count = 0;
 	            foreach ( $product_categories as $category ) {
 		            
                 if(!$uncategorized) {
                     if ( 'uncategorized' === $category->slug ) {
                         continue; // Skip this iteration
                     }
+                }
+		            
+                if ($displayed_count >= $cat_itemnumber) {
+                    break; // Stop the loop if the limit is reached
                 }
                 
 	            $thumbnail_id  = get_term_meta( $category->term_id, 'thumbnail_id', true );
@@ -88,7 +91,8 @@ $col_class = "col-xl-{$col_xl} col-lg-{$col_lg} col-md-{$col_md} col-sm-{$col_sm
                     </h3>
                 </div>
             </div>
-            <?php } ?>
+            
+            <?php  $displayed_count++; } ?>
     </div>
 </div>
 

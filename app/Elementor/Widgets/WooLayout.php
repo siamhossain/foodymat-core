@@ -367,49 +367,6 @@ class WooLayout extends ElementorBase {
 				],
 			]
 		);
-		
-		
-		
-		$this->end_controls_section();
-		
-		$this->start_controls_section(
-			'sec_colors',
-			[
-				'label'   => esc_html__( 'Colors', 'foodymat-core' ),
-				'tab'     => Controls_Manager::TAB_CONTENT,
-			],
-		);
-		
-		$this->add_control(
-			'title_color',
-			[
-				'type'    => Controls_Manager::COLOR,
-				'label'   => esc_html__( 'Title Color', 'foodymat-core' ),
-				'default' => '',
-				'selectors' => [
-					'{{WRAPPER}} .food-box .item-content .item-title a' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .shop-layout-style7 .food-box .item-header .item-title a' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .food-menu-combo .food-box-2 .item-content .item-title a' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .food-menu-isotop-style11 .item-box .item-body .item-title a' => 'color: {{VALUE}}',
-				],
-			],
-		);
-		
-		$this->add_control(
-			'title_size',
-			[
-				'type'    => Controls_Manager::NUMBER,
-				'label'   => esc_html__( 'Title Font Size', 'foodymat-core' ),
-				'default' => '',
-				'selectors' => [
-					'{{WRAPPER}} .food-box .item-content .item-title' => 'font-size: {{VALUE}}px',
-					'{{WRAPPER}} .shop-layout-style7 .food-box .item-header .item-title' => 'font-size: {{VALUE}}px',
-					'{{WRAPPER}} .food-menu-combo .food-box-2 .item-content .item-title' => 'font-size: {{VALUE}}px',
-					'{{WRAPPER}} .food-menu-isotop-style11 .item-box .item-body .item-title' => 'font-size: {{VALUE}}px',
-				],
-			],
-		);
-		
 		$this->end_controls_section();
 		
 		// Responsive Settings
@@ -1030,6 +987,484 @@ class WooLayout extends ElementorBase {
 		
 		$this->end_controls_section();
 		
+		// Title Settings
+		//==============================================================
+		$this->start_controls_section(
+			'title_settings',
+			[
+				'label' => esc_html__( 'Title', 'foodymat-core' ),
+				'tab'   => Controls_Manager::TAB_STYLE,
+			]
+		);
+		
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'title_typography',
+				'label'    => esc_html__( 'Typo', 'foodymat-core' ),
+				'selector' => '{{WRAPPER}} .product-item .item-content .item-title',
+			]
+		);
+		
+		$this->add_control(
+			'title_color',
+			[
+				'type'      => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Color', 'foodymat-core' ),
+				'selectors' => [
+					'{{WRAPPER}} .product-item .item-content .item-title a'   => 'color: {{VALUE}}',
+				],
+			]
+		);
+		
+		$this->add_control(
+			'title_hover_color',
+			[
+				'type'      => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Hover Color', 'foodymat-core' ),
+				'selectors' => [
+					'{{WRAPPER}} .product-item .item-content .item-title a:hover' => 'color: {{VALUE}}',
+				],
+			]
+		);
+		
+		$this->add_responsive_control(
+			'title_spacing',
+			[
+				'label'      => __( 'Title Spacing', 'foodymat-core' ),
+				'type'       => Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range'      => [
+					'px' => [
+						'min'  => 0,
+						'max'  => 100,
+						'step' => 1,
+					],
+				],
+				'selectors'  => [
+					'{{WRAPPER}} .product-item .item-content .item-title' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+		
+		$this->end_controls_section();
+		
+		
+		// Category Settings
+		//==============================================================
+		$this->start_controls_section(
+			'category_settings',
+			[
+				'label' => esc_html__( 'Category', 'foodymat-core' ),
+				'tab'   => Controls_Manager::TAB_STYLE,
+			]
+		);
+		
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'category_typography',
+				'label'    => esc_html__( 'Typo', 'foodymat-core' ),
+				'selector' => '{{WRAPPER}} .product-item .item-content .product-categories a',
+			]
+		);
+		
+		$this->add_responsive_control(
+			'cat_radius',
+			[
+				'label'      => __( 'Border Radius', 'foodymat-core' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'selectors'  => [
+					'{{WRAPPER}} .product-item .item-content .product-categories a' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}',
+				],
+			]
+		);
+		
+		$this->add_responsive_control(
+			'cat_padding',
+			[
+				'label'      => __( 'Padding', 'foodymat-core' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'selectors'  => [
+					'{{WRAPPER}} .product-item .item-content .product-categories a' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}',
+				],
+			]
+		);
+		
+		//Start Icon Style Tab
+		$this->start_controls_tabs(
+			'category_style_tabs'
+		);
+		
+		//Normal Style
+		$this->start_controls_tab(
+			'category_style_normal_tab',
+			[
+				'label' => __( 'Normal', 'foodymat-core' ),
+			]
+		);
+		$this->add_control(
+			'category_color',
+			[
+				'type'      => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Color', 'foodymat-core' ),
+				'selectors' => [
+					'{{WRAPPER}} .product-item .item-content .product-categories a' => 'color: {{VALUE}}',
+				],
+			]
+		);
+		$this->add_control(
+			'category_bg_color',
+			[
+				'type'      => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Background Color', 'foodymat-core' ),
+				'selectors' => [
+					'{{WRAPPER}} .product-item .item-content .product-categories a'  => 'background-color: {{VALUE}}',
+				],
+			]
+		);
+		
+		$this->add_group_control(
+			\Elementor\Group_Control_Border::get_type(),
+			[
+				'name'     => 'category_border',
+				'label'    => __( 'Border', 'foodymat-core' ),
+				'selector' => '{{WRAPPER}} .product-item .item-content .product-categories a',
+			]
+		);
+		
+		$this->add_group_control(
+			\Elementor\Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'category_box_shadow',
+				'label' => __('Category Shadow', 'foodymat-core'),
+				'selector' => '{{WRAPPER}} .product-item .item-content .product-categories a',
+			]
+		);
+		
+		$this->end_controls_tab();
+		
+		//Hover Style
+		$this->start_controls_tab(
+			'category_style_hover_tab',
+			[
+				'label' => __( 'Hover', 'foodymat-core' ),
+			]
+		);
+		
+		$this->add_control(
+			'category_hover_color',
+			[
+				'type'      => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Color Hover', 'foodymat-core' ),
+				'selectors' => [
+					'{{WRAPPER}} .product-item .item-content .product-categories a:hover' => 'color: {{VALUE}}',
+				],
+			]
+		);
+		
+		$this->add_control(
+			'category_bg_hover_color',
+			[
+				'type'      => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Background Color', 'foodymat-core' ),
+				'selectors' => [
+					'{{WRAPPER}} .product-item .item-content .product-categories a:hover'  => 'background-color: {{VALUE}}',
+				],
+			]
+		);
+		
+		$this->add_group_control(
+			\Elementor\Group_Control_Border::get_type(),
+			[
+				'name'     => 'category_border_hover',
+				'label'    => __( 'Border', 'foodymat-core' ),
+				'selector' => '{{WRAPPER}} .product-item .item-content .product-categories a:hover',
+			]
+		);
+		
+		$this->add_group_control(
+			\Elementor\Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'category_box_hover_shadow',
+				'label' => __('Icon Shadow', 'foodymat-core'),
+				'selector' => '{{WRAPPER}} .product-item .item-content .product-categories a:hover',
+			]
+		);
+		
+		$this->end_controls_tab();
+		
+		$this->end_controls_tabs();
+		//End Icon Style Tab
+		
+		$this->add_responsive_control(
+			'category_spacing',
+			[
+				'label'      => __( 'Category Spacing', 'foodymat-core' ),
+				'type'       => Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range'      => [
+					'px' => [
+						'min'  => 0,
+						'max'  => 100,
+						'step' => 1,
+					],
+				],
+				'selectors'  => [
+					'{{WRAPPER}} .product-item .item-content .product-categories' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+		
+		$this->end_controls_section();
+		
+		// Discount Flag Settings
+		//==============================================================
+		$this->start_controls_section(
+			'flag_settings',
+			[
+				'label' => esc_html__( 'Discount Flag', 'foodymat-core' ),
+				'tab'   => Controls_Manager::TAB_STYLE,
+			]
+		);
+		
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'flag_typography',
+				'label'    => esc_html__( 'Typo', 'foodymat-core' ),
+				'selector' => '{{WRAPPER}} .product-item .discount-flag',
+			]
+		);
+		
+		$this->add_responsive_control(
+			'flag_box_radius',
+			[
+				'label'      => __( 'Border Radius', 'foodymat-core' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'selectors'  => [
+					'{{WRAPPER}} .product-item .discount-flag' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}',
+				],
+			]
+		);
+		
+		//Start Icon Style Tab
+		$this->start_controls_tabs(
+			'flag_style_tabs'
+		);
+		
+		//Normal Style
+		$this->start_controls_tab(
+			'flag_style_normal_tab',
+			[
+				'label' => __( 'Normal', 'foodymat-core' ),
+			]
+		);
+		$this->add_control(
+			'flag_color',
+			[
+				'type'      => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Color', 'foodymat-core' ),
+				'selectors' => [
+					'{{WRAPPER}} .product-item .discount-flag span' => 'color: {{VALUE}}',
+				],
+			]
+		);
+		$this->add_control(
+			'flag_bg_color',
+			[
+				'type'      => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Background Color', 'foodymat-core' ),
+				'selectors' => [
+					'{{WRAPPER}} .product-item .discount-flag'  => 'background-color: {{VALUE}}',
+				],
+			]
+		);
+		
+		$this->end_controls_tab();
+		
+		//Hover Style
+		$this->start_controls_tab(
+			'flag_style_hover_tab',
+			[
+				'label' => __( 'Hover', 'foodymat-core' ),
+			]
+		);
+		
+		$this->add_control(
+			'flag_hover_color',
+			[
+				'type'      => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Color Hover', 'foodymat-core' ),
+				'selectors' => [
+					'{{WRAPPER}} .product-item .discount-flag:hover span' => 'color: {{VALUE}}',
+				],
+			]
+		);
+		
+		$this->add_control(
+			'flag_bg_hover_color',
+			[
+				'type'      => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Background Color', 'foodymat-core' ),
+				'selectors' => [
+					'{{WRAPPER}} .product-item .discount-flag:hover'  => 'background-color: {{VALUE}}',
+				],
+			]
+		);
+		
+		$this->end_controls_tab();
+		
+		$this->end_controls_tabs();
+		//End Icon Style Tab
+		
+		$this->add_responsive_control(
+			'category_spacing',
+			[
+				'label'      => __( 'Category Spacing', 'foodymat-core' ),
+				'type'       => Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range'      => [
+					'px' => [
+						'min'  => 0,
+						'max'  => 100,
+						'step' => 1,
+					],
+				],
+				'selectors'  => [
+					'{{WRAPPER}} .product-item .item-content .product-categories' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+		
+		$this->end_controls_section();
+		
+		// Excerpt Settings
+		//==============================================================
+		$this->start_controls_section(
+			'excerpt_settings',
+			[
+				'label' => esc_html__( 'Excerpt', 'foodymat-core' ),
+				'tab'   => Controls_Manager::TAB_STYLE,
+			]
+		);
+		
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'excerpt_typography',
+				'label'    => esc_html__( 'Typo', 'foodymat-core' ),
+				'selector' => '{{WRAPPER}} .product-item .item-content .excerpt',
+			]
+		);
+		
+		$this->add_control(
+			'excerpt_color',
+			[
+				'type'      => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Color', 'foodymat-core' ),
+				'selectors' => [
+					'{{WRAPPER}} .product-item .item-content .excerpt'   => 'color: {{VALUE}}',
+				],
+			]
+		);
+		
+		$this->add_responsive_control(
+			'excerpt_spacing',
+			[
+				'label'      => __( 'Excerpt Spacing', 'foodymat-core' ),
+				'type'       => Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range'      => [
+					'px' => [
+						'min'  => 0,
+						'max'  => 100,
+						'step' => 1,
+					],
+				],
+				'selectors'  => [
+					'{{WRAPPER}} .product-item .item-content .excerpt' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+		
+		$this->end_controls_section();
+		
+		// price Settings
+		//==============================================================
+		$this->start_controls_section(
+			'price_settings',
+			[
+				'label' => esc_html__( 'Price', 'foodymat-core' ),
+				'tab'   => Controls_Manager::TAB_STYLE,
+			]
+		);
+		
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'sale_price_typography',
+				'label'    => esc_html__( 'Sale Price Typo', 'foodymat-core' ),
+				'selector' => '{{WRAPPER}} .product-item .item-content .item-price .sale-price',
+			]
+		);
+		
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'original_price_typography',
+				'label'    => esc_html__( 'Original Price Typo', 'foodymat-core' ),
+				'selector' => '{{WRAPPER}} .product-item .item-content .item-price .original-price',
+			]
+		);
+		
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'variable_price_typography',
+				'label'    => esc_html__( 'Variable Price Typo', 'foodymat-core' ),
+				'selector' => '{{WRAPPER}} .product-item .item-content .item-price',
+			]
+		);
+		
+		$this->add_control(
+			'sale_price_color',
+			[
+				'type'      => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Sale Price Color', 'foodymat-core' ),
+				'selectors' => [
+					'{{WRAPPER}} .product-item .item-content .item-price .sale-price'   => 'color: {{VALUE}}',
+				],
+			]
+		);
+		
+		$this->add_control(
+			'original_price_color',
+			[
+				'type'      => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Original Price Color', 'foodymat-core' ),
+				'selectors' => [
+					'{{WRAPPER}} .product-item .item-content .item-price .original-price'   => 'color: {{VALUE}}',
+				],
+			]
+		);
+		
+		$this->add_control(
+			'variable_price_color',
+			[
+				'type'      => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Variable Price Color', 'foodymat-core' ),
+				'selectors' => [
+					'{{WRAPPER}} .product-item .item-content .item-price'   => 'color: {{VALUE}}',
+				],
+			]
+		);
+		
+		$this->end_controls_section();
+		
 		//Animation setting
 		$this->start_controls_section(
 			'animation_style',
@@ -1121,7 +1556,6 @@ class WooLayout extends ElementorBase {
 		);
 		
 		$this->end_controls_section();
-
 	}
 	
 	

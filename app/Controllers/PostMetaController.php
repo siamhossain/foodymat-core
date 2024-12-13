@@ -29,7 +29,7 @@ class PostMetaController {
 		$this->postmeta->add_meta_box(
 			"rt_page_settings",
 			__( 'Layout Settings', 'foodymat-core' ),
-			[ 'page', 'post', 'rt-team', 'rt-service', 'rt-project' ],
+			[ 'page', 'post', 'rt-team', 'rt-service'],
 			'',
 			'',
 			'high',
@@ -117,19 +117,6 @@ class PostMetaController {
                 'fields' => $this->get_service_icon_meta(),
             ]
         );
-
-		//Project meta
-		$this->postmeta->add_meta_box(
-			"rt_project_info",
-			__( 'Project Info', 'foodymat-core' ),
-			[ 'rt-project' ],
-			'',
-			'',
-			'high',
-			[
-				'fields' => $this->get_project_info_meta(),
-			]
-		);
 
         //header footer build
 		$this->postmeta->add_meta_box(
@@ -489,62 +476,5 @@ class PostMetaController {
             ],
         ] );
     }
-
-
-	//Project meta info
-	function get_project_info_meta() {
-		return apply_filters( 'rt_project_meta_field', [
-			'rt_project_title' => [
-				'label'   => __( 'Info Title', 'foodymat-core' ),
-				'type'    => 'text',
-				'default' => __( 'Project Info', 'foodymat-core' ),
-			],
-
-			'rt_project_text' => [
-				'label'   => __( 'Info Text', 'foodymat-core' ),
-				'type'    => 'text',
-				'default' => '',
-			],
-
-			'rt_project_client' => [
-				'label'   => __( 'Client', 'foodymat-core' ),
-				'type'    => 'text',
-				'default' => '',
-			],
-
-			'rt_project_start' => [
-				'label'   => __( 'Starts On', 'foodymat-core' ),
-				'type'    => 'text',
-				'default' => '',
-			],
-
-			'rt_project_end' => [
-				'label'   => __( 'End On', 'foodymat-core' ),
-				'type'    => 'text',
-				'default' => '',
-			],
-
-			'rt_project_weblink' => [
-				'label'   => __( 'Weblink', 'foodymat-core' ),
-				'type'    => 'text',
-				'default' => '',
-			],
-
-			'rt_project_rating' => [
-				'label' => __( 'Select the Rating', 'foodymat-core' ),
-				'type'  => 'select',
-				'options' => array(
-					'-1' => __( 'Default', 'foodymat-core' ),
-					'1'    => '1',
-					'2'    => '2',
-					'3'    => '3',
-					'4'    => '4',
-					'5'    => '5'
-				),
-				'default'  => '-1',
-			],
-
-		] );
-	}
 }
 

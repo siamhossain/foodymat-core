@@ -613,6 +613,8 @@ class Image extends ElementorBase {
 					'zoomInLeft' => esc_html__( 'zoomInLeft', 'foodymat-core' ),
 					'zoomInRight' => esc_html__( 'zoomInRight', 'foodymat-core' ),
 					'zoomOut' => esc_html__( 'zoomOut', 'foodymat-core' ),
+					'fadeInBottomLeft' => esc_html__( 'fadeInBottomLeft', 'foodymat-core' ),
+					'fadeInBottomRight' => esc_html__( 'fadeInBottomRight', 'foodymat-core' ),
 				],
 				'default' => 'fadeInUp',
 				'condition'   => [

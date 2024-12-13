@@ -41,7 +41,7 @@ class PostTypeController {
 				'menu_icon'     => 'dashicons-admin-customizer',
 				'menu_position' => 20,
 				'supports'      => [ 'title', 'editor', 'thumbnail', 'excerpt', 'author', 'comments' ],
-				'description'   => __( 'Teams Custom Post Type', 'foodymat-core' ),
+				'description'   => __( 'Teams Custom Post TypeX', 'foodymat-core' ),
 			],
 			[
 				'id'            => 'rt-service',
@@ -53,16 +53,6 @@ class PostTypeController {
 				'supports'      => [ 'title', 'editor', 'thumbnail', 'excerpt', 'author', 'comments' ],
 				'description'   => __( 'Service Custom Post Type', 'foodymat-core' ),
 			],
-			[
-				'id'            => 'rt-project',
-				'slug'          => foodymat_option('rt_project_slug'),
-				'singular'      => 'Project',
-				'plural'        => 'Project',
-				'menu_icon'     => 'dashicons-admin-customizer',
-				'menu_position' => 22,
-				'supports'      => [ 'title', 'editor', 'thumbnail', 'excerpt', 'author', 'comments' ],
-				'description'   => __( 'Project Custom Post Type', 'foodymat-core' ),
-			]
 		];
 
 		$this->post_type->add_post_types( $custom_posts );
@@ -88,13 +78,6 @@ class PostTypeController {
 				'singular'  => __( 'Service Category', 'foodymat-core' ),
 				'plural'    => __( 'Service Categories', 'foodymat-core' ),
 			],
-			[
-				'id'        => 'rt-project-category',
-				'post_type' => [ 'rt-project' ],
-				'slug'      => foodymat_option('rt_project_cat_slug'),
-				'singular'  => __( 'Project Category', 'foodymat-core' ),
-				'plural'    => __( 'Project Categories', 'foodymat-core' ),
-			]
 		];
 
 		$this->post_type->add_taxonomies( $custom_posts );

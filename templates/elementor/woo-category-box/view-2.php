@@ -83,7 +83,7 @@ $col_class = "col-xl-{$col_xl} col-lg-{$col_lg} col-md-{$col_md} col-sm-{$col_sm
 		            <?php } ?>
 
                     <h3 class="category-title">
-                        <a href="<?php echo esc_url( $term_link ); ?>"><?php echo esc_html( $category->name ); ?></a>
+                        <a href="<?php echo esc_url( $category_link ); ?>"><?php echo esc_html( $category->name ); ?></a>
 			            <?php if ( $cat_num_display == 'yes' ) { ?><span class="category-count">(<?php echo esc_html( $category->count ); ?>)</span><?php } ?>
                     </h3>
                 </div>

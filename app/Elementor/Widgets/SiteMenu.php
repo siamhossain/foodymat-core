@@ -202,7 +202,7 @@ class SiteMenu extends ElementorBase {
 				'type'      => Controls_Manager::COLOR,
 				'label'     => esc_html__( 'Menu item color:hover', 'foodymat-core' ),
 				'selectors' => [
-					'{{WRAPPER}} .foodymat-navigation ul li a:hover' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .foodymat-navigation ul li a:hover' => 'color: {{VALUE}} !important',
 				],
 			]
 		);

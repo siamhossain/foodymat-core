@@ -107,13 +107,16 @@
 	$discount_percentage = '';
     
     if (! empty( $settings['fmp_fixed_order_amount'] ) ) {
+	    $discount_purchase_amount = intval($settings['fmp_fixed_order_amount']);
 	    $discount_purchase_amount = wc_price( $settings['fmp_fixed_order_amount'] );
     }
     
     if (! empty( $settings['fmp_fixed_discount'] ) ) {
+	    $discount_amount = intval($settings['fmp_fixed_discount']);
 	    $discount_amount = wc_price( $settings['fmp_fixed_discount'] );
     }
     if (! empty( $settings['fmp_discount_percentage'] ) ) {
+	    $discount_percentage = intval($settings['fmp_discount_percentage']);
 	    $discount_percentage = wc_price( $settings['fmp_discount_percentage'] );
     }
 
@@ -142,7 +145,7 @@
                     $rating_count = $product->get_rating_count();
                     ?>
                     <div class="swiper-slide <?php echo esc_attr( $animation );?> <?php echo esc_attr( $animation_effect );?>" data-wow-delay="<?php echo esc_attr( $delay );?>ms" data-wow-duration="<?php echo esc_attr( $duration );?>ms">
-                        <div class="product-item product-item-style3 product-item-<?php echo esc_attr($style); ?>">
+                        <div class="product-item product-item-style3 product-item-<?php echo esc_attr($style); ?> product">
                             <div class="img-wrap">
                                 <div class="item-img">
                                     <a href="<?php the_permalink(); ?>">
@@ -165,7 +168,7 @@
                                 <?php } elseif (!empty ($discount_amount) && $discount_flag_display ) { ?>
                                     <div class="discount-flag">
                                         <span>
-                                            <span class="price-percent"><?php echo $discount_amount; ?></span>
+                                            <span class="price-percent"><?php echo $discount_amount ?></span>
                                             OFF UPTO <?php echo $discount_purchase_amount; ?>
                                         </span>
                                     </div>
@@ -199,11 +202,11 @@
                                                         break;
                                                     case 'grouped':
                                                         $link = get_permalink($product->get_id());
-                                                        echo '<a href="' . esc_url($link) . '">' . esc_html__('View Product', 'panpie-core') . '</a>';
+                                                        echo '<a href="' . esc_url($link) . '">' . esc_html__('View Product', 'foodymat-core') . '</a>';
                                                         break;
                                                     case 'external':
                                                         $link = !empty($ext_product_url) ? $ext_product_url : get_permalink($product->get_id());
-                                                        $label = !empty($ext_button_text) ? $ext_button_text : esc_html__('Read More', 'panpie-core');
+                                                        $label = !empty($ext_button_text) ? $ext_button_text : esc_html__('Read More', 'foodymat-core');
                                                         echo '<a href="' . esc_url($link) . '">' . wp_kses($label, 'alltext_allow') . '</a>';
                                                         break;
                                                     default:
@@ -244,23 +247,23 @@
                                             case 'variable':
                                                 
                                                 $link = get_permalink($product->get_id());
-                                                $label = esc_html__('View options', 'panpie-core');
-                                                echo '<a href="' . esc_url($link) . '" class="cart-btn btn button-2"><i class="icon-rt-cart"></i>' . esc_html($label) . '</a>';
+                                                $label = esc_html__('View options', 'foodymat-core');
+                                                echo '<a href="' . esc_url($link) . '" class="cart-btn btn button-2 add_to_cart_button ajax_add_to_cart fmp-mini-cart" data-quantity="1" data-product_id="' . esc_attr($id) . '"><i class="icon-rt-cart"></i>' . esc_html($label) . '</a>';
                                                 break;
                                             case 'grouped':
                                                 $link = get_permalink($product->get_id());
-                                                $label = esc_html__('Select Product', 'panpie-core');
-                                                echo '<a href="' . esc_url($link) . '" class="cart-btn btn button-2"><i class="icon-rt-cart"></i>' . esc_html($label) . '</a>';
+                                                $label = esc_html__('Select Product', 'foodymat-core');
+                                                echo '<a href="' . esc_url($link) . '" class="cart-btn btn button-2 add_to_cart_button ajax_add_to_cart fmp-mini-cart" data-quantity="1" data-product_id="' . esc_attr($id) . '"><i class="icon-rt-cart"></i>' . esc_html($label) . '</a>';
                                                 break;
                                             case 'external':
                                                 $link = !empty($ext_product_url) ? $ext_product_url : get_permalink($product->get_id());
-                                                $label = !empty($ext_button_text) ? $ext_button_text : esc_html__('Read More', 'panpie-core');
-                                                echo '<a href="' . esc_url($link) . '" class="cart-btn btn button-2"><i class="icon-rt-cart"></i>' . esc_html($label) . '</a>';
+                                                $label = !empty($ext_button_text) ? $ext_button_text : esc_html__('Read More', 'foodymat-core');
+                                                echo '<a href="' . esc_url($link) . '" class="cart-btn btn button-2 add_to_cart_button ajax_add_to_cart fmp-mini-cart" data-quantity="1" data-product_id="' . esc_attr($id) . '"><i class="icon-rt-cart"></i>' . esc_html($label) . '</a>';
                                                 break;
                                             default:
                                                 $link = esc_url($product->add_to_cart_url());
-                                                $label = esc_html__('Order Now', 'panpie-core');
-                                                echo '<a href="' . $link . '" class="cart-btn btn button-2"><i class="icon-rt-cart"></i>' . esc_html($label) . '</a>';
+                                                $label = esc_html__('Order Now', 'foodymat-core');
+                                                echo '<a href="' . $link . '" class="cart-btn btn button-2 add_to_cart_button ajax_add_to_cart fmp-mini-cart" data-quantity="1" data-product_id="' . esc_attr($id) . '"><i class="icon-rt-cart"></i>' . esc_html($label) . '</a>';
                                                 break;
                                         }
                                     ?>
@@ -271,6 +274,7 @@
                     </div>
 		            <?php $delay = $delay + 200; $duraton = $duration + 0;  ?>
                 <?php endwhile; ?>
+	            <?php wp_reset_postdata();?>
             <?php endif; ?>
         </div>
 	    

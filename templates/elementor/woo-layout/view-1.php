@@ -104,19 +104,15 @@
 	$discount_percentage = '';
     
     if (! empty( $settings['fmp_fixed_order_amount'] ) ) {
-	    $discount_purchase_amount = wc_price( $settings['fmp_fixed_order_amount'] );
+	    $discount_purchase_amount = wc_price( $settings['fmp_fixed_order_amount'], ['decimals' => 0] );
     }
     
     if (! empty( $settings['fmp_fixed_discount'] ) ) {
-	    $discount_amount = wc_price( $settings['fmp_fixed_discount'] );
+	    $discount_amount = wc_price( $settings['fmp_fixed_discount'], ['decimals' => 0] );
     }
     if (! empty( $settings['fmp_discount_percentage'] ) ) {
-	    $discount_percentage = wc_price( $settings['fmp_discount_percentage'] );
+	    $discount_percentage = wc_price( $settings['fmp_discount_percentage'], ['decimals' => 0] );
     }
-	
-//	foreach ($settings as $key => $value) {
-//		echo "Key: $key, Value: $value<br>";
-//	}
 
 ?>
 
@@ -124,7 +120,7 @@
    
     <div class="row <?php //echo esc_attr($item_space); ?>">
 		<?php if ($query->have_posts()) : ?>
-			<?php $i = 1; ?>
+			<?php $i = 1; $ade = $delay; $adu = $duration; ?>
 			<?php while ($query->have_posts()) : $query->the_post(); ?>
 				<?php
 				$id = get_the_ID();
@@ -143,10 +139,10 @@
 				$rating_count = $product->get_rating_count();
 				?>
                 <div class="<?php echo esc_attr($col_class) ?>">
-                    <div class="product-item product-item-<?php echo esc_attr($style); ?> text-center">
+                    <div class="product-item product product-item-<?php echo esc_attr($style); ?> text-center <?php echo esc_attr( $animation)?> <?php echo esc_attr( $animation_effect)?>" data-wow-delay="<?php esc_attr( $ade ); ?>ms" data-wow-duration="<?php esc_attr( $adu ); ?>ms">
                         <div class="img-wrap">
                             <div class="item-img">
-                                <a href="<?php the_permalink(); ?>">
+                                <a href="<?php the_permalink(); ?>" class="woocommerce-LoopProduct-link woocommerce-loop-product__link">
 									<?php
 										if (has_post_thumbnail()) {
 											the_post_thumbnail('foodymat-size8');
@@ -213,11 +209,11 @@
 													break;
 												case 'grouped':
 													$link = get_permalink($product->get_id());
-													echo '<a href="' . esc_url($link) . '">' . esc_html__('View Product', 'panpie-core') . '</a>';
+													echo '<a href="' . esc_url($link) . '">' . esc_html__('View Product', 'foodymat-core') . '</a>';
 													break;
 												case 'external':
 													$link = !empty($ext_product_url) ? $ext_product_url : get_permalink($product->get_id());
-													$label = !empty($ext_button_text) ? $ext_button_text : esc_html__('Read More', 'panpie-core');
+													$label = !empty($ext_button_text) ? $ext_button_text : esc_html__('Read More', 'foodymat-core');
 													echo '<a href="' . esc_url($link) . '">' . wp_kses($label, 'alltext_allow') . '</a>';
 													break;
 												default:
@@ -239,26 +235,24 @@
 									<?php
 										switch ($product->get_type()) {
 											case 'variable':
-												
 												$link = get_permalink($product->get_id());
-												$label = esc_html__('View options', 'panpie-core');
-												echo '<a href="' . esc_url($link) . '" class="cart-btn btn button-2"><i class="icon-rt-cart"></i>' . esc_html($label) . '</a>';
+												$label = esc_html__('View options', 'foodymat-core');
+												echo '<a href="' . esc_url($link) . '" class="cart-btn btn button-2 add_to_cart_button ajax_add_to_cart fmp-mini-cart" data-quantity="1" data-product_id="' . esc_attr($id) . '"><i class="icon-rt-cart"></i>' . esc_html($label) . '</a>';
 												break;
 											case 'grouped':
 												$link = get_permalink($product->get_id());
-												$label = esc_html__('Select Product', 'panpie-core');
-												echo '<a href="' . esc_url($link) . '" class="cart-btn btn button-2"><i class="icon-rt-cart"></i>' . esc_html($label) . '</a>';
+												$label = esc_html__('Select Product', 'foodymat-core');
+												echo '<a href="' . esc_url($link) . '" class="cart-btn btn button-2 add_to_cart_button ajax_add_to_cart fmp-mini-cart" data-quantity="1" data-product_id="' . esc_attr($id) . '"><i class="icon-rt-cart"></i>' . esc_html($label) . '</a>';
 												break;
 											case 'external':
 												$link = !empty($ext_product_url) ? $ext_product_url : get_permalink($product->get_id());
-												$label = !empty($ext_button_text) ? $ext_button_text : esc_html__('Read More', 'panpie-core');
-												echo '<a href="' . esc_url($link) . '" class="cart-btn btn button-2"><i class="icon-rt-cart"></i>' . esc_html($label) . '</a>';
+												$label = !empty($ext_button_text) ? $ext_button_text : esc_html__('Read More', 'foodymat-core');
+												echo '<a href="' . esc_url($link) . '" class="cart-btn btn button-2 add_to_cart_button ajax_add_to_cart fmp-mini-cart" data-quantity="1" data-product_id="' . esc_attr($id) . '"><i class="icon-rt-cart"></i>' . esc_html($label) . '</a>';
 												break;
 											default:
 												$link = esc_url($product->add_to_cart_url());
-												$label = esc_html__('Order Now', 'panpie-core');
-												echo '<a href="' . $link . '" class="cart-btn btn button-2"><i class="icon-rt-cart"></i>' . esc_html($label) . '</a>';
-												break;
+												$label = esc_html__('Order Now', 'foodymat-core');
+                                                echo '<a href="' . $link . '" class="fmp-wc-add-to-cart-btn cart-btn btn button-2 add_to_cart_button ajax_add_to_cart fmp-mini-cart" data-quantity="1" data-product_id="' . esc_attr($id) . '"><i class="icon-rt-cart"></i>' . esc_html($label) . '</a>';
 										}
 									?>
                                 </div>
@@ -266,8 +260,8 @@
                         </div>
                     </div>
                 </div>
-				<?php $i++; ?>
-			<?php endwhile; ?>
+			<?php $i++; $ade = $ade + 200; $adu = $adu + 0; endwhile; ?>
+			<?php wp_reset_postdata();?>
 		<?php endif; ?>
     </div>
 	<?php if ( $more_button == 'show' ) { ?>

@@ -58,17 +58,6 @@ class WooCategoryBox extends ElementorBase {
 			]
 		);
 		
-		/*Recipe Multi Select*/
-//		$this->add_control(
-//			'cat_multi_category',
-//			[
-//				'type'    => Controls_Manager::SELECT2,
-//				'label'   => __( 'Categories', 'foodymat-core' ),
-//				'options' => $woo_category_dropdown,
-//				'multiple'=> false,
-//				'default' => '1',
-//			],
-//		);
 		
 		//for icon category-start
 		$this->add_control(
@@ -116,17 +105,6 @@ class WooCategoryBox extends ElementorBase {
 			],
 		);
 		
-//		$this->add_control(
-//			Group_Control_Image_Size::get_type(),
-//			[
-//
-//				'mode'    => 'group',
-//				'label'   => esc_html__( 'image size', 'foodymat-core' ),
-//				'name' => 'active_image_size',
-//				'separator' => 'none',
-//				'condition'   => array('icontype' => array( 'image' ) , 'imagetype' => array( 'active_image_tab' ) ),
-//			],
-//		);
 		
 		$this->add_group_control(
 			Group_Control_Image_Size::get_type(),
@@ -149,17 +127,6 @@ class WooCategoryBox extends ElementorBase {
 				'condition'   => array( 'icontype' => array( 'image' ) , 'imagetype' => array( 'hover_image_tab' ) ),
 			],
 		);
-		
-//		$this->add_control(
-//			Group_Control_Image_Size::get_type(),
-//			[
-//				'mode'    => 'group',
-//				'label'   => esc_html__( 'image size', 'foodymat-core' ),
-//				'name' => 'hover_image_size',
-//				'separator' => 'none',
-//				'condition'   => array('icontype' => array( 'image' ) , 'imagetype' => array( 'hover_image_tab' ) ),
-//			],
-//		);
 		
 		$this->add_group_control(
 			Group_Control_Image_Size::get_type(),
@@ -202,6 +169,16 @@ class WooCategoryBox extends ElementorBase {
 				'default'     => false,
 				'description' => esc_html__( 'Enable or disable Uncategorized. Default: Off', 'foodymat-core' ),
 			]
+		);
+		
+		$this->add_control(
+			'cat_itemnumber',
+			[
+				'type'    => Controls_Manager::NUMBER,
+				'label'   => esc_html__( 'Item Number', 'foodymat-core' ),
+				'default' => 4,
+				'description' => esc_html__( '( Category item limit )', 'foodymat-core' ),
+			],
 		);
 		
 		$this->end_controls_section();

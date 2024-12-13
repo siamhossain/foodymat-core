@@ -11,7 +11,7 @@ if ( $nav_menu == '0' ) {
 	return;
 }
 ?>
-<nav class="foodymat-navigation" role="navigation">
+<nav class="foodymat-navigation widget_nav_menu" role="navigation">
 	<?php
 	wp_nav_menu( [
 		'menu'        => $nav_menu,
